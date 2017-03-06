@@ -12,5 +12,6 @@
   </head>
   <body>
   $END$
+  Eclipse Edit
   </body>
 </html>
