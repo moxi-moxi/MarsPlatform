@@ -12,6 +12,6 @@
   </head>
   <body>
   $END$
-  Eclipse Edit
+  Mars Web
   </body>
 </html>
