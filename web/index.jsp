@@ -12,6 +12,6 @@
   </head>
   <body>
   $END$
-  Mars Web
+  Mars Platform
   </body>
 </html>
