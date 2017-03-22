@@ -7,7 +7,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath:spring-platform.xml
+			classpath:mars-platform.xml
 		</param-value>
 	</context-param>
 	

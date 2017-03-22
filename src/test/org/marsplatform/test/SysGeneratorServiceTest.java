@@ -17,12 +17,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:spring-renren.xml" })
+@ContextConfiguration({ "classpath:spring-platform.xml" })
 public class SysGeneratorServiceTest {
 	@Autowired
 	private SysGeneratorService sysGeneratorService;
 	//zip输出路径
-	String zipPath = "E://renrenio//code.zip";
+	String zipPath = "C://mars-platform//code.zip";
 	//表名
 	String[] tableNames = new String[] {"sys_user"};
 
@@ -40,7 +40,7 @@ public class SysGeneratorServiceTest {
 		ZipInputStream zip = new ZipInputStream(new FileInputStream(zipPath));
 		ZipEntry entry;
 		while((entry = zip.getNextEntry()) != null) {
-			file = new File("E://renrenio//" + entry.getName());
+			file = new File("C://mars-platform//" + entry.getName());
 			if(!file.getParentFile().exists()){
 				file.getParentFile().mkdirs();
 			}
