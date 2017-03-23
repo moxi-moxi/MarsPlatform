@@ -1,4 +1,4 @@
-package org.marsplatform.extend.system.task;
+package org.marsplatform.test;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.marsplatform.extend.system.model.SysUserEntity;
@@ -13,12 +13,9 @@ import org.springframework.stereotype.Component;
  * 
  * testTask为spring bean的名称
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年11月30日 下午1:34:24
  */
-@Component("testTask")
-public class TestTask {
+@Component("taskTest")
+public class TaskTest {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired

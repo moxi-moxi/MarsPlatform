@@ -6,11 +6,11 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.marsplatform.core.common.web.Response;
+import org.marsplatform.core.common.web.Page;
+import org.marsplatform.core.exception.GlobalException;
 import org.marsplatform.extend.system.model.ScheduleJobEntity;
 import org.marsplatform.extend.system.service.ScheduleJobService;
-import org.marsplatform.util.PageUtils;
-import org.marsplatform.util.R;
-import org.marsplatform.util.RRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 定时任务
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年11月28日 下午2:16:40
  */
 @RestController
 @RequestMapping("/sys/schedule")
@@ -35,19 +32,19 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:schedule:list")
-	public R list(String beanName, Integer page, Integer limit){
+	public Response list(String beanName, Integer curPage, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("beanName", beanName);
-		map.put("offset", (page - 1) * limit);
+		map.put("offset", (curPage - 1) * limit);
 		map.put("limit", limit);
 		
 		//查询列表数据
 		List<ScheduleJobEntity> jobList = scheduleJobService.queryList(map);
 		int total = scheduleJobService.queryTotal(map);
 		
-		PageUtils pageUtil = new PageUtils(jobList, total, limit, page);
+		Page page = new Page(jobList, total, limit, curPage);
 		
-		return R.ok().put("page", pageUtil);
+		return Response.ok().put("page", page);
 	}
 	
 	/**
@@ -55,10 +52,10 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/info/{jobId}")
 	@RequiresPermissions("sys:schedule:info")
-	public R info(@PathVariable("jobId") Long jobId){
+	public Response info(@PathVariable("jobId") Long jobId){
 		ScheduleJobEntity schedule = scheduleJobService.queryObject(jobId);
 		
-		return R.ok().put("schedule", schedule);
+		return Response.ok().put("schedule", schedule);
 	}
 	
 	/**
@@ -66,13 +63,13 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("sys:schedule:save")
-	public R save(@RequestBody ScheduleJobEntity scheduleJob){
+	public Response save(@RequestBody ScheduleJobEntity scheduleJob){
 		//数据校验
 		verifyForm(scheduleJob);
 		
 		scheduleJobService.save(scheduleJob);
 		
-		return R.ok();
+		return Response.ok();
 	}
 	
 	/**
@@ -80,13 +77,13 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("sys:schedule:update")
-	public R update(@RequestBody ScheduleJobEntity scheduleJob){
+	public Response update(@RequestBody ScheduleJobEntity scheduleJob){
 		//数据校验
 		verifyForm(scheduleJob);
 				
 		scheduleJobService.update(scheduleJob);
 		
-		return R.ok();
+		return Response.ok();
 	}
 	
 	/**
@@ -94,10 +91,10 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("sys:schedule:delete")
-	public R delete(@RequestBody Long[] jobIds){
+	public Response delete(@RequestBody Long[] jobIds){
 		scheduleJobService.deleteBatch(jobIds);
 		
-		return R.ok();
+		return Response.ok();
 	}
 	
 	/**
@@ -105,10 +102,10 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/run")
 	@RequiresPermissions("sys:schedule:run")
-	public R run(@RequestBody Long[] jobIds){
+	public Response run(@RequestBody Long[] jobIds){
 		scheduleJobService.run(jobIds);
 		
-		return R.ok();
+		return Response.ok();
 	}
 	
 	/**
@@ -116,10 +113,10 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/pause")
 	@RequiresPermissions("sys:schedule:pause")
-	public R pause(@RequestBody Long[] jobIds){
+	public Response pause(@RequestBody Long[] jobIds){
 		scheduleJobService.pause(jobIds);
 		
-		return R.ok();
+		return Response.ok();
 	}
 	
 	/**
@@ -127,10 +124,10 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/resume")
 	@RequiresPermissions("sys:schedule:resume")
-	public R resume(@RequestBody Long[] jobIds){
+	public Response resume(@RequestBody Long[] jobIds){
 		scheduleJobService.resume(jobIds);
 		
-		return R.ok();
+		return Response.ok();
 	}
 	
 	/**
@@ -138,15 +135,15 @@ public class ScheduleJobController {
 	 */
 	private void verifyForm(ScheduleJobEntity scheduleJob){
 		if(StringUtils.isBlank(scheduleJob.getBeanName())){
-			throw new RRException("bean名称不能为空");
+			throw new GlobalException("bean名称不能为空");
 		}
 		
 		if(StringUtils.isBlank(scheduleJob.getMethodName())){
-			throw new RRException("方法名称不能为空");
+			throw new GlobalException("方法名称不能为空");
 		}
 		
 		if(StringUtils.isBlank(scheduleJob.getCronExpression())){
-			throw new RRException("cron表达式不能为空");
+			throw new GlobalException("cron表达式不能为空");
 		}
 	}
 }

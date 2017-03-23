@@ -6,11 +6,11 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.marsplatform.core.common.web.Response;
+import org.marsplatform.core.common.web.Page;
+import org.marsplatform.core.exception.GlobalException;
 import org.marsplatform.extend.system.model.SysConfigEntity;
 import org.marsplatform.extend.system.service.SysConfigService;
-import org.marsplatform.util.PageUtils;
-import org.marsplatform.util.R;
-import org.marsplatform.util.RRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 系统配置信息
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年12月4日 下午6:55:53
  */
 @RestController
 @RequestMapping("/sys/config")
@@ -35,19 +32,19 @@ public class SysConfigController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:config:list")
-	public R list(String key, Integer page, Integer limit){
+	public Response list(String key, Integer curPage, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("key", key);
-		map.put("offset", (page - 1) * limit);
+		map.put("offset", (curPage - 1) * limit);
 		map.put("limit", limit);
 		
 		//查询列表数据
 		List<SysConfigEntity> configList = sysConfigService.queryList(map);
 		int total = sysConfigService.queryTotal(map);
 		
-		PageUtils pageUtil = new PageUtils(configList, total, limit, page);
+		Page page = new Page(configList, total, limit, curPage);
 		
-		return R.ok().put("page", pageUtil);
+		return Response.ok().put("page", page);
 	}
 	
 	
@@ -56,10 +53,10 @@ public class SysConfigController extends AbstractController {
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("sys:config:info")
-	public R info(@PathVariable("id") Long id){
+	public Response info(@PathVariable("id") Long id){
 		SysConfigEntity config = sysConfigService.queryObject(id);
 		
-		return R.ok().put("config", config);
+		return Response.ok().put("config", config);
 	}
 	
 	/**
@@ -67,13 +64,13 @@ public class SysConfigController extends AbstractController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("sys:config:save")
-	public R save(@RequestBody SysConfigEntity config){
+	public Response save(@RequestBody SysConfigEntity config){
 		//参数校验
 		verifyForm(config);
 
 		sysConfigService.save(config);
 		
-		return R.ok();
+		return Response.ok();
 	}
 	
 	/**
@@ -81,13 +78,13 @@ public class SysConfigController extends AbstractController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("sys:config:update")
-	public R update(@RequestBody SysConfigEntity config){
+	public Response update(@RequestBody SysConfigEntity config){
 		//参数校验
 		verifyForm(config);
 		
 		sysConfigService.update(config);
 		
-		return R.ok();
+		return Response.ok();
 	}
 	
 	/**
@@ -95,10 +92,10 @@ public class SysConfigController extends AbstractController {
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("sys:config:delete")
-	public R delete(@RequestBody Long[] ids){
+	public Response delete(@RequestBody Long[] ids){
 		sysConfigService.deleteBatch(ids);
 		
-		return R.ok();
+		return Response.ok();
 	}
 	
 	/**
@@ -106,11 +103,11 @@ public class SysConfigController extends AbstractController {
 	 */
 	private void verifyForm(SysConfigEntity config){
 		if(StringUtils.isBlank(config.getKey())){
-			throw new RRException("参数名不能为空");
+			throw new GlobalException("参数名不能为空");
 		}
 		
 		if(StringUtils.isBlank(config.getValue())){
-			throw new RRException("参数值不能为空");
+			throw new GlobalException("参数值不能为空");
 		}
 	}
 }

@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.marsplatform.extend.system.constant.SystemConstant;
+import org.marsplatform.extend.system.constant.SystemConstant.MenuType;
 import org.marsplatform.extend.system.dao.SysMenuDao;
 import org.marsplatform.extend.system.model.SysMenuEntity;
 import org.marsplatform.extend.system.service.SysMenuService;
 import org.marsplatform.extend.system.service.SysRoleMenuService;
 import org.marsplatform.extend.system.service.SysUserService;
-import org.marsplatform.util.Constant.MenuType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,7 +108,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 		List<SysMenuEntity> subMenuList = new ArrayList<SysMenuEntity>();
 		
 		for(SysMenuEntity entity : menuList){
-			if(entity.getType() == MenuType.CATALOG.getValue()){//目录
+			if(entity.getType() == SystemConstant.MenuType.CATALOG.getValue()){//目录
 				entity.setList(getMenuTreeList(queryListParentId(entity.getMenuId(), menuIdList), menuIdList));
 			}
 			subMenuList.add(entity);

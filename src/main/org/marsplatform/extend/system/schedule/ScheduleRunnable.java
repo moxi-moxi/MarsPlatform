@@ -1,16 +1,15 @@
-package org.marsplatform.util;
+package org.marsplatform.extend.system.schedule;
 
 import java.lang.reflect.Method;
 
 import org.apache.commons.lang.StringUtils;
+import org.marsplatform.core.exception.GlobalException;
+import org.marsplatform.core.util.SpringContextUtils;
 import org.springframework.util.ReflectionUtils;
 
 /**
  * 执行定时任务
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年11月30日 下午12:49:33
  */
 public class ScheduleRunnable implements Runnable {
 	private Object target;
@@ -38,7 +37,7 @@ public class ScheduleRunnable implements Runnable {
 				method.invoke(target);
 			}
 		}catch (Exception e) {
-			throw new RRException("执行定时任务失败", e);
+			throw new GlobalException("执行定时任务失败", e);
 		}
 	}
 

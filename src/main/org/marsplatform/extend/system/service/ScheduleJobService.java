@@ -8,9 +8,6 @@ import org.marsplatform.extend.system.model.ScheduleJobEntity;
 /**
  * 定时任务
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年11月28日 上午9:55:32
  */
 public interface ScheduleJobService {
 

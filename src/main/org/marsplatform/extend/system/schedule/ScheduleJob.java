@@ -1,4 +1,4 @@
-package org.marsplatform.util;
+package org.marsplatform.extend.system.schedule;
 
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.apache.commons.lang.StringUtils;
+import org.marsplatform.core.util.SpringContextUtils;
 import org.marsplatform.extend.system.model.ScheduleJobEntity;
 import org.marsplatform.extend.system.model.ScheduleJobLogEntity;
 import org.marsplatform.extend.system.service.ScheduleJobLogService;
@@ -19,9 +20,6 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 /**
  * 定时任务
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年11月30日 下午12:44:21
  */
 public class ScheduleJob extends QuartzJobBean {
 	private Logger logger = LoggerFactory.getLogger(getClass());

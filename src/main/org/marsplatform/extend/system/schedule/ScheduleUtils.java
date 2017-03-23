@@ -1,7 +1,8 @@
-package org.marsplatform.util;
+package org.marsplatform.extend.system.schedule;
 
+import org.marsplatform.core.constant.GlobalConstant.ScheduleStatus;
+import org.marsplatform.core.exception.GlobalException;
 import org.marsplatform.extend.system.model.ScheduleJobEntity;
-import org.marsplatform.util.Constant.ScheduleStatus;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
@@ -16,9 +17,6 @@ import org.quartz.TriggerKey;
 /**
  * 定时任务工具类
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年11月30日 下午12:44:59
  */
 public class ScheduleUtils {
     private final static String JOB_NAME = "TASK_";
@@ -44,7 +42,7 @@ public class ScheduleUtils {
         try {
             return (CronTrigger) scheduler.getTrigger(getTriggerKey(jobId));
         } catch (SchedulerException e) {
-            throw new RRException("获取定时任务CronTrigger出现异常", e);
+            throw new GlobalException("获取定时任务CronTrigger出现异常", e);
         }
     }
 
@@ -73,7 +71,7 @@ public class ScheduleUtils {
             	pauseJob(scheduler, scheduleJob.getJobId());
             }
         } catch (SchedulerException e) {
-            throw new RRException("创建定时任务失败", e);
+            throw new GlobalException("创建定时任务失败", e);
         }
     }
     
@@ -104,7 +102,7 @@ public class ScheduleUtils {
             }
             
         } catch (SchedulerException e) {
-            throw new RRException("更新定时任务失败", e);
+            throw new GlobalException("更新定时任务失败", e);
         }
     }
 
@@ -119,7 +117,7 @@ public class ScheduleUtils {
         	
             scheduler.triggerJob(getJobKey(scheduleJob.getJobId()), dataMap);
         } catch (SchedulerException e) {
-            throw new RRException("立即执行定时任务失败", e);
+            throw new GlobalException("立即执行定时任务失败", e);
         }
     }
 
@@ -130,7 +128,7 @@ public class ScheduleUtils {
         try {
             scheduler.pauseJob(getJobKey(jobId));
         } catch (SchedulerException e) {
-            throw new RRException("暂停定时任务失败", e);
+            throw new GlobalException("暂停定时任务失败", e);
         }
     }
 
@@ -141,7 +139,7 @@ public class ScheduleUtils {
         try {
             scheduler.resumeJob(getJobKey(jobId));
         } catch (SchedulerException e) {
-            throw new RRException("暂停定时任务失败", e);
+            throw new GlobalException("暂停定时任务失败", e);
         }
     }
 
@@ -152,7 +150,7 @@ public class ScheduleUtils {
         try {
             scheduler.deleteJob(getJobKey(jobId));
         } catch (SchedulerException e) {
-            throw new RRException("删除定时任务失败", e);
+            throw new GlobalException("删除定时任务失败", e);
         }
     }
 }

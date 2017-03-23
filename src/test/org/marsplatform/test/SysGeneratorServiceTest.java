@@ -17,7 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:spring-platform.xml" })
+@ContextConfiguration({ "classpath:mars-platform.xml" })
 public class SysGeneratorServiceTest {
 	@Autowired
 	private SysGeneratorService sysGeneratorService;
@@ -28,7 +28,7 @@ public class SysGeneratorServiceTest {
 
 	@Test
 	public void testGeneratorCode() throws IOException {
-		byte[] data = sysGeneratorService.generatorCode(tableNames);
+		byte[] data = sysGeneratorService.generateCode(tableNames);
 		File file = new File(zipPath);
 		if(!file.getParentFile().exists()){
 			file.getParentFile().mkdirs();

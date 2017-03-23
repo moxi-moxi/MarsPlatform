@@ -1,4 +1,4 @@
-package org.marsplatform.extend.codegenerator;
+package org.marsplatform.core.generator;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,17 +21,14 @@ import org.apache.commons.lang.WordUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import org.marsplatform.util.DateUtils;
-import org.marsplatform.util.RRException;
+import org.marsplatform.core.exception.GlobalException;
+import org.marsplatform.core.util.DateUtils;
 
 /**
  * 代码生成器   工具类
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年12月19日 下午11:40:24
  */
-public class GenUtils {
+public class CodeGenerator {
 	
 	public static List<String> getTemplates(){
 		List<String> templates = new ArrayList<String>();
@@ -49,7 +46,7 @@ public class GenUtils {
 	/**
 	 * 生成代码
 	 */
-	public static void generatorCode(Map<String, String> table, 
+	public static void generateCode(Map<String, String> table, 
 			List<Map<String, String>> columns, ZipOutputStream zip){
 		//配置信息
 		Configuration config = getConfig();
@@ -130,7 +127,7 @@ public class GenUtils {
 				IOUtils.closeQuietly(sw);
 				zip.closeEntry();
 			} catch (IOException e) {
-				throw new RRException("渲染模板失败，表名：" + tableEntity.getTableName(), e);
+				throw new GlobalException("渲染模板失败，表名：" + tableEntity.getTableName(), e);
 			}
 		}
 	}
@@ -160,7 +157,7 @@ public class GenUtils {
 		try {
 			return new PropertiesConfiguration("generator.properties");
 		} catch (ConfigurationException e) {
-			throw new RRException("获取配置文件失败，", e);
+			throw new GlobalException("获取配置文件失败，", e);
 		}
 	}
 	
@@ -174,7 +171,7 @@ public class GenUtils {
 		}
 		
 		if(template.contains("Entity.java.vm")){
-			return packagePath + "entity" + File.separator + className + "Entity.java";
+			return packagePath + "model" + File.separator + className + "Entity.java";
 		}
 		
 		if(template.contains("Dao.java.vm")){
@@ -182,7 +179,7 @@ public class GenUtils {
 		}
 		
 		if(template.contains("Dao.xml.vm")){
-			return packagePath + "dao" + File.separator + className + "Dao.xml";
+			return packagePath + "dao" + File.separator + "xml" + File.separator + className + "Dao.xml";
 		}
 		
 		if(template.contains("Service.java.vm")){

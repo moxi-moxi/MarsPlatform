@@ -4,6 +4,6 @@
 	<tool>
 	    <key>shiro</key>
 	    <scope>application</scope>
-	    <class>org.marsplatform.extend.system.shiro.VelocityShiro</class>
+	    <class>org.marsplatform.extend.system.security.VelocityShiro</class>
 	</tool>
 </toolbox>

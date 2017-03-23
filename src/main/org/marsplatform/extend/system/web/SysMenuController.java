@@ -6,12 +6,13 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.marsplatform.core.common.web.Response;
+import org.marsplatform.core.common.web.Page;
+import org.marsplatform.core.exception.GlobalException;
+import org.marsplatform.extend.system.constant.SystemConstant;
+import org.marsplatform.extend.system.constant.SystemConstant.MenuType;
 import org.marsplatform.extend.system.model.SysMenuEntity;
 import org.marsplatform.extend.system.service.SysMenuService;
-import org.marsplatform.util.Constant.MenuType;
-import org.marsplatform.util.PageUtils;
-import org.marsplatform.util.R;
-import org.marsplatform.util.RRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,9 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 系统菜单
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年10月27日 下午9:58:15
  */
 @RestController
 @RequestMapping("/sys/menu")
@@ -36,18 +34,18 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:menu:list")
-	public R list(Integer page, Integer limit){
+	public Response list(Integer curPage, Integer limit){
 		Map<String, Object> map = new HashMap<>();
-		map.put("offset", (page - 1) * limit);
+		map.put("offset", (curPage - 1) * limit);
 		map.put("limit", limit);
 		
 		//查询列表数据
 		List<SysMenuEntity> menuList = sysMenuService.queryList(map);
 		int total = sysMenuService.queryTotal(map);
 		
-		PageUtils pageUtil = new PageUtils(menuList, total, limit, page);
+		Page page = new Page(menuList, total, limit, curPage);
 		
-		return R.ok().put("page", pageUtil);
+		return Response.ok().put("page", page);
 	}
 	
 	/**
@@ -55,7 +53,7 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/select")
 	@RequiresPermissions("sys:menu:select")
-	public R select(){
+	public Response select(){
 		//查询列表数据
 		List<SysMenuEntity> menuList = sysMenuService.queryNotButtonList();
 		
@@ -67,7 +65,7 @@ public class SysMenuController extends AbstractController {
 		root.setOpen(true);
 		menuList.add(root);
 		
-		return R.ok().put("menuList", menuList);
+		return Response.ok().put("menuList", menuList);
 	}
 	
 	/**
@@ -75,11 +73,11 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/perms")
 	@RequiresPermissions("sys:menu:perms")
-	public R perms(){
+	public Response perms(){
 		//查询列表数据
 		List<SysMenuEntity> menuList = sysMenuService.queryList(new HashMap<String, Object>());
 		
-		return R.ok().put("menuList", menuList);
+		return Response.ok().put("menuList", menuList);
 	}
 	
 	/**
@@ -87,9 +85,9 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/info/{menuId}")
 	@RequiresPermissions("sys:menu:info")
-	public R info(@PathVariable("menuId") Long menuId){
+	public Response info(@PathVariable("menuId") Long menuId){
 		SysMenuEntity menu = sysMenuService.queryObject(menuId);
-		return R.ok().put("menu", menu);
+		return Response.ok().put("menu", menu);
 	}
 	
 	/**
@@ -97,13 +95,13 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("sys:menu:save")
-	public R save(@RequestBody SysMenuEntity menu){
+	public Response save(@RequestBody SysMenuEntity menu){
 		//数据校验
 		verifyForm(menu);
 		
 		sysMenuService.save(menu);
 		
-		return R.ok();
+		return Response.ok();
 	}
 	
 	/**
@@ -111,13 +109,13 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("sys:menu:update")
-	public R update(@RequestBody SysMenuEntity menu){
+	public Response update(@RequestBody SysMenuEntity menu){
 		//数据校验
 		verifyForm(menu);
 				
 		sysMenuService.update(menu);
 		
-		return R.ok();
+		return Response.ok();
 	}
 	
 	/**
@@ -125,25 +123,25 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("sys:menu:delete")
-	public R delete(@RequestBody Long[] menuIds){
+	public Response delete(@RequestBody Long[] menuIds){
 		for(Long menuId : menuIds){
 			if(menuId.longValue() <= 28){
-				return R.error("系统菜单，不能删除");
+				return Response.error("系统菜单，不能删除");
 			}
 		}
 		sysMenuService.deleteBatch(menuIds);
 		
-		return R.ok();
+		return Response.ok();
 	}
 	
 	/**
 	 * 用户菜单列表
 	 */
 	@RequestMapping("/user")
-	public R user(){
+	public Response user(){
 		List<SysMenuEntity> menuList = sysMenuService.getUserMenuList(getUserId());
 		
-		return R.ok().put("menuList", menuList);
+		return Response.ok().put("menuList", menuList);
 	}
 	
 	/**
@@ -151,40 +149,40 @@ public class SysMenuController extends AbstractController {
 	 */
 	private void verifyForm(SysMenuEntity menu){
 		if(StringUtils.isBlank(menu.getName())){
-			throw new RRException("菜单名称不能为空");
+			throw new GlobalException("菜单名称不能为空");
 		}
 		
 		if(menu.getParentId() == null){
-			throw new RRException("上级菜单不能为空");
+			throw new GlobalException("上级菜单不能为空");
 		}
 		
 		//菜单
-		if(menu.getType() == MenuType.MENU.getValue()){
+		if(menu.getType() == SystemConstant.MenuType.MENU.getValue()){
 			if(StringUtils.isBlank(menu.getUrl())){
-				throw new RRException("菜单URL不能为空");
+				throw new GlobalException("菜单URL不能为空");
 			}
 		}
 		
 		//上级菜单类型
-		int parentType = MenuType.CATALOG.getValue();
+		int parentType = SystemConstant.MenuType.CATALOG.getValue();
 		if(menu.getParentId() != 0){
 			SysMenuEntity parentMenu = sysMenuService.queryObject(menu.getParentId());
 			parentType = parentMenu.getType();
 		}
 		
 		//目录、菜单
-		if(menu.getType() == MenuType.CATALOG.getValue() ||
-				menu.getType() == MenuType.MENU.getValue()){
-			if(parentType != MenuType.CATALOG.getValue()){
-				throw new RRException("上级菜单只能为目录类型");
+		if(menu.getType() == SystemConstant.MenuType.CATALOG.getValue() ||
+				menu.getType() == SystemConstant.MenuType.MENU.getValue()){
+			if(parentType != SystemConstant.MenuType.CATALOG.getValue()){
+				throw new GlobalException("上级菜单只能为目录类型");
 			}
 			return ;
 		}
 		
 		//按钮
-		if(menu.getType() == MenuType.BUTTON.getValue()){
-			if(parentType != MenuType.MENU.getValue()){
-				throw new RRException("上级菜单只能为菜单类型");
+		if(menu.getType() == SystemConstant.MenuType.BUTTON.getValue()){
+			if(parentType != SystemConstant.MenuType.MENU.getValue()){
+				throw new GlobalException("上级菜单只能为菜单类型");
 			}
 			return ;
 		}

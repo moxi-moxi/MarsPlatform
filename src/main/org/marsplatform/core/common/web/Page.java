@@ -1,4 +1,4 @@
-package org.marsplatform.util;
+package org.marsplatform.core.common.web;
 
 import java.io.Serializable;
 import java.util.List;
@@ -6,11 +6,8 @@ import java.util.List;
 /**
  * 分页工具类
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年11月4日 下午12:59:00
  */
-public class PageUtils implements Serializable {
+public class Page implements Serializable {
 	private static final long serialVersionUID = 1L;
 	//总记录数
 	private int totalCount;
@@ -19,7 +16,7 @@ public class PageUtils implements Serializable {
 	//总页数
 	private int totalPage;
 	//当前页数
-	private int currPage;
+	private int curPage;
 	//列表数据
 	private List<?> list;
 	
@@ -28,13 +25,13 @@ public class PageUtils implements Serializable {
 	 * @param list        列表数据
 	 * @param totalCount  总记录数
 	 * @param pageSize    每页记录数
-	 * @param currPage    当前页数
+	 * @param curPage     当前页数
 	 */
-	public PageUtils(List<?> list, int totalCount, int pageSize, int currPage) {
+	public Page(List<?> list, int totalCount, int pageSize, int curPage) {
 		this.list = list;
 		this.totalCount = totalCount;
 		this.pageSize = pageSize;
-		this.currPage = currPage;
+		this.curPage = curPage;
 		this.totalPage = (int)Math.ceil((double)totalCount/pageSize);
 	}
 
@@ -62,12 +59,12 @@ public class PageUtils implements Serializable {
 		this.totalPage = totalPage;
 	}
 
-	public int getCurrPage() {
-		return currPage;
+	public int getCurPage() {
+		return curPage;
 	}
 
-	public void setCurrPage(int currPage) {
-		this.currPage = currPage;
+	public void setCurPage(int curPage) {
+		this.curPage = curPage;
 	}
 
 	public List<?> getList() {

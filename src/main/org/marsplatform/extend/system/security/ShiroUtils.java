@@ -1,4 +1,4 @@
-package org.marsplatform.util;
+package org.marsplatform.extend.system.security;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -8,9 +8,6 @@ import org.marsplatform.extend.system.model.SysUserEntity;
 /**
  * Shiro工具类
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年11月12日 上午9:49:19
  */
 public class ShiroUtils {
 

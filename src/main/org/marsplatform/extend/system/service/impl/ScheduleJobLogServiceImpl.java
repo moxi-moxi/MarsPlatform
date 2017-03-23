@@ -1,5 +1,6 @@
 package org.marsplatform.extend.system.service.impl;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.marsplatform.extend.system.model.ScheduleJobLogEntity;
 import org.marsplatform.extend.system.service.ScheduleJobLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service("scheduleJobLogService")
 public class ScheduleJobLogServiceImpl implements ScheduleJobLogService {

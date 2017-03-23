@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.IOUtils;
-import org.marsplatform.extend.codegenerator.GenUtils;
+import org.marsplatform.core.generator.CodeGenerator;
 import org.marsplatform.extend.system.dao.SysGeneratorDao;
 import org.marsplatform.extend.system.service.SysGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 	}
 
 	@Override
-	public byte[] generatorCode(String[] tableNames) {
+	public byte[] generateCode(String[] tableNames) {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		ZipOutputStream zip = new ZipOutputStream(outputStream);
 		
@@ -48,7 +48,7 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 			//查询列信息
 			List<Map<String, String>> columns = queryColumns(tableName);
 			//生成代码
-			GenUtils.generatorCode(table, columns, zip);
+			CodeGenerator.generateCode(table, columns, zip);
 		}
 		IOUtils.closeQuietly(zip);
 		return outputStream.toByteArray();

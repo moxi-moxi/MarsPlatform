@@ -1,6 +1,6 @@
 package ${package}.dao;
 
-import ${package}.entity.${className}Entity;
+import ${package}.model.${className}Entity;
 
 /**
  * ${comments}

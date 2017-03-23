@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.marsplatform.core.common.web.Response;
+import org.marsplatform.core.common.web.Page;
 import org.marsplatform.extend.system.service.SysGeneratorService;
-import org.marsplatform.util.PageUtils;
-import org.marsplatform.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +22,6 @@ import com.alibaba.fastjson.JSON;
 /**
  * 代码生成器
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年12月19日 下午9:12:58
  */
 @Controller
 @RequestMapping("/sys/generator")
@@ -38,19 +35,19 @@ public class SysGeneratorController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:generator:list")
-	public R list(String tableName, Integer page, Integer limit){
+	public Response list(String tableName, Integer curPage, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("tableName", tableName);
-		map.put("offset", (page - 1) * limit);
+		map.put("offset", (curPage - 1) * limit);
 		map.put("limit", limit);
 		
 		//查询列表数据
 		List<Map<String, Object>> list = sysGeneratorService.queryList(map);
 		int total = sysGeneratorService.queryTotal(map);
 		
-		PageUtils pageUtil = new PageUtils(list, total, limit, page);
+		Page page = new Page(list, total, limit, curPage);
 		
-		return R.ok().put("page", pageUtil);
+		return Response.ok().put("page", page);
 	}
 	
 	/**
@@ -62,7 +59,7 @@ public class SysGeneratorController {
 		String[] tableNames = new String[]{};
 		tableNames = JSON.parseArray(tables).toArray(tableNames);
 		
-		byte[] data = sysGeneratorService.generatorCode(tableNames);
+		byte[] data = sysGeneratorService.generateCode(tableNames);
 		
 		response.reset();  
         response.setHeader("Content-Disposition", "attachment; filename=\"mars-platform.zip\"");  

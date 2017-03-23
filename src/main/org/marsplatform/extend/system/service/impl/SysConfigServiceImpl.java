@@ -9,7 +9,6 @@ import org.marsplatform.extend.system.model.SysConfigEntity;
 import org.marsplatform.extend.system.service.SysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.alibaba.fastjson.JSON;
 
 @Service("sysConfigService")
