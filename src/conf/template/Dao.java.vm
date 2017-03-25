@@ -1,6 +1,7 @@
 package ${package}.dao;
 
 import ${package}.model.${className}Entity;
+import org.marsplatform.core.common.dao.BaseDao;
 
 /**
  * ${comments}

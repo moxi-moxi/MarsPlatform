@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.marsplatform.core.common.web.Response;
+import org.marsplatform.core.common.web.Result;
 import org.marsplatform.core.common.web.Page;
 import org.marsplatform.extend.system.model.SysRoleEntity;
 import org.marsplatform.extend.system.service.SysRoleMenuService;
@@ -34,7 +34,7 @@ public class SysRoleController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:role:list")
-	public Response list(String roleName, Integer curPage, Integer limit){
+	public Result list(String roleName, Integer curPage, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("roleName", roleName);
 		map.put("offset", (curPage - 1) * limit);
@@ -46,7 +46,7 @@ public class SysRoleController extends AbstractController {
 		
 		Page page = new Page(list, total, limit, curPage);
 		
-		return Response.ok().put("page", page);
+		return Result.ok().put("page", page);
 	}
 	
 	/**
@@ -54,11 +54,11 @@ public class SysRoleController extends AbstractController {
 	 */
 	@RequestMapping("/select")
 	@RequiresPermissions("sys:role:select")
-	public Response select(){
+	public Result select(){
 		//查询列表数据
 		List<SysRoleEntity> list = sysRoleService.queryList(new HashMap<String, Object>());
 		
-		return Response.ok().put("list", list);
+		return Result.ok().put("list", list);
 	}
 	
 	/**
@@ -66,14 +66,14 @@ public class SysRoleController extends AbstractController {
 	 */
 	@RequestMapping("/info/{roleId}")
 	@RequiresPermissions("sys:role:info")
-	public Response info(@PathVariable("roleId") Long roleId){
+	public Result info(@PathVariable("roleId") Long roleId){
 		SysRoleEntity role = sysRoleService.queryObject(roleId);
 		
 		//查询角色对应的菜单
 		List<Long> menuIdList = sysRoleMenuService.queryMenuIdList(roleId);
 		role.setMenuIdList(menuIdList);
 		
-		return Response.ok().put("role", role);
+		return Result.ok().put("role", role);
 	}
 	
 	/**
@@ -81,14 +81,14 @@ public class SysRoleController extends AbstractController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("sys:role:save")
-	public Response save(@RequestBody SysRoleEntity role){
+	public Result save(@RequestBody SysRoleEntity role){
 		if(StringUtils.isBlank(role.getRoleName())){
-			return Response.error("角色名称不能为空");
+			return Result.error("角色名称不能为空");
 		}
 		
 		sysRoleService.save(role);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -96,14 +96,14 @@ public class SysRoleController extends AbstractController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("sys:role:update")
-	public Response update(@RequestBody SysRoleEntity role){
+	public Result update(@RequestBody SysRoleEntity role){
 		if(StringUtils.isBlank(role.getRoleName())){
-			return Response.error("角色名称不能为空");
+			return Result.error("角色名称不能为空");
 		}
 		
 		sysRoleService.update(role);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -111,9 +111,9 @@ public class SysRoleController extends AbstractController {
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("sys:role:delete")
-	public Response delete(@RequestBody Long[] roleIds){
+	public Result delete(@RequestBody Long[] roleIds){
 		sysRoleService.deleteBatch(roleIds);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 }

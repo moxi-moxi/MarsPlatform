@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.marsplatform.app.proj.dao.XmjbxxDao">
+
+	<select id="queryObject" resultType="org.marsplatform.app.proj.model.XmjbxxEntity">
+		select * from proj_xmjbxx where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="org.marsplatform.app.proj.model.XmjbxxEntity">
+		select * from proj_xmjbxx 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from proj_xmjbxx 
+	</select>
+	 
+	<insert id="save" parameterType="org.marsplatform.app.proj.model.XmjbxxEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into proj_xmjbxx
+		(
+			`xmmc`, 
+			`xmlx`, 
+			`xmxz`, 
+			`yjhte`, 
+			`fzr_id`, 
+			`qsrq`, 
+			`jzrq`, 
+			`xmms`
+		)
+		values
+		(
+			#{xmmc}, 
+			#{xmlx}, 
+			#{xmxz}, 
+			#{yjhte}, 
+			#{fzrId}, 
+			#{qsrq}, 
+			#{jzrq}, 
+			#{xmms}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="org.marsplatform.app.proj.model.XmjbxxEntity">
+		update proj_xmjbxx 
+		<set>
+			<if test="xmmc != null">`xmmc` = #{xmmc}, </if>
+			<if test="xmlx != null">`xmlx` = #{xmlx}, </if>
+			<if test="xmxz != null">`xmxz` = #{xmxz}, </if>
+			<if test="yjhte != null">`yjhte` = #{yjhte}, </if>
+			<if test="fzrId != null">`fzr_id` = #{fzrId}, </if>
+			<if test="qsrq != null">`qsrq` = #{qsrq}, </if>
+			<if test="jzrq != null">`jzrq` = #{jzrq}, </if>
+			<if test="xmms != null">`xmms` = #{xmms}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from proj_xmjbxx where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from proj_xmjbxx where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

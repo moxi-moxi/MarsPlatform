@@ -1,4 +1,4 @@
-package org.marsplatform.extend.system.dao;
+package org.marsplatform.core.common.dao;
 
 import java.util.List;
 import java.util.Map;

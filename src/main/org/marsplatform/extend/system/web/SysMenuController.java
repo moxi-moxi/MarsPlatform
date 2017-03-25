@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.marsplatform.core.common.web.Response;
+import org.marsplatform.core.common.web.Result;
 import org.marsplatform.core.common.web.Page;
 import org.marsplatform.core.exception.GlobalException;
 import org.marsplatform.extend.system.constant.SystemConstant;
@@ -34,7 +34,7 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:menu:list")
-	public Response list(Integer curPage, Integer limit){
+	public Result list(Integer curPage, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (curPage - 1) * limit);
 		map.put("limit", limit);
@@ -45,7 +45,7 @@ public class SysMenuController extends AbstractController {
 		
 		Page page = new Page(menuList, total, limit, curPage);
 		
-		return Response.ok().put("page", page);
+		return Result.ok().put("page", page);
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/select")
 	@RequiresPermissions("sys:menu:select")
-	public Response select(){
+	public Result select(){
 		//查询列表数据
 		List<SysMenuEntity> menuList = sysMenuService.queryNotButtonList();
 		
@@ -65,7 +65,7 @@ public class SysMenuController extends AbstractController {
 		root.setOpen(true);
 		menuList.add(root);
 		
-		return Response.ok().put("menuList", menuList);
+		return Result.ok().put("menuList", menuList);
 	}
 	
 	/**
@@ -73,11 +73,11 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/perms")
 	@RequiresPermissions("sys:menu:perms")
-	public Response perms(){
+	public Result perms(){
 		//查询列表数据
 		List<SysMenuEntity> menuList = sysMenuService.queryList(new HashMap<String, Object>());
 		
-		return Response.ok().put("menuList", menuList);
+		return Result.ok().put("menuList", menuList);
 	}
 	
 	/**
@@ -85,9 +85,9 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/info/{menuId}")
 	@RequiresPermissions("sys:menu:info")
-	public Response info(@PathVariable("menuId") Long menuId){
+	public Result info(@PathVariable("menuId") Long menuId){
 		SysMenuEntity menu = sysMenuService.queryObject(menuId);
-		return Response.ok().put("menu", menu);
+		return Result.ok().put("menu", menu);
 	}
 	
 	/**
@@ -95,13 +95,13 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("sys:menu:save")
-	public Response save(@RequestBody SysMenuEntity menu){
+	public Result save(@RequestBody SysMenuEntity menu){
 		//数据校验
 		verifyForm(menu);
 		
 		sysMenuService.save(menu);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -109,13 +109,13 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("sys:menu:update")
-	public Response update(@RequestBody SysMenuEntity menu){
+	public Result update(@RequestBody SysMenuEntity menu){
 		//数据校验
 		verifyForm(menu);
 				
 		sysMenuService.update(menu);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -123,25 +123,25 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("sys:menu:delete")
-	public Response delete(@RequestBody Long[] menuIds){
+	public Result delete(@RequestBody Long[] menuIds){
 		for(Long menuId : menuIds){
 			if(menuId.longValue() <= 28){
-				return Response.error("系统菜单，不能删除");
+				return Result.error("系统菜单，不能删除");
 			}
 		}
 		sysMenuService.deleteBatch(menuIds);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
 	 * 用户菜单列表
 	 */
 	@RequestMapping("/user")
-	public Response user(){
+	public Result user(){
 		List<SysMenuEntity> menuList = sysMenuService.getUserMenuList(getUserId());
 		
-		return Response.ok().put("menuList", menuList);
+		return Result.ok().put("menuList", menuList);
 	}
 	
 	/**

@@ -1,16 +1,17 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../${appPrefix}/${pathName}/list',
+        url: '../proj/xmjbxx/list',
         datatype: "json",
         colModel: [			
-#foreach($column in $columns)
-#if($column.columnName == $pk.columnName)
-			{ label: '${column.attrname}', name: '${column.attrname}', width: 50, key: true },
-#else
-			{ label: '${column.comments}', name: '${column.attrname}', width: 80 }#if($velocityCount != $columns.size()), #end
-			
-#end			
-#end
+			{ label: 'id', name: 'id', width: 50, key: true },
+			{ label: '项目名称', name: 'xmmc', width: 80 }, 			
+			{ label: '项目类型  0：研制  1：集成  2：论证  99：其它', name: 'xmlx', width: 80 }, 			
+			{ label: '项目性质  0：明确任务  1：前期跟踪', name: 'xmxz', width: 80 }, 			
+			{ label: '预计合同额', name: 'yjhte', width: 80 }, 			
+			{ label: '负责人  ref@sys_user.user_id', name: 'fzrId', width: 80 }, 			
+			{ label: '起始日期', name: 'qsrq', width: 80 }, 			
+			{ label: '截止日期', name: 'jzrq', width: 80 }, 			
+			{ label: '项目描述', name: 'xmms', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
@@ -44,7 +45,7 @@ var vm = new Vue({
 	data:{
 		showList: true,
 		title: null,
-		${classname}: {}
+		xmjbxx: {}
 	},
 	methods: {
 		query: function () {
@@ -53,24 +54,24 @@ var vm = new Vue({
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
-			vm.${classname} = {};
+			vm.xmjbxx = {};
 		},
 		update: function (event) {
-			var $pk.attrname = getSelectedRow();
-			if($pk.attrname == null){
+			var id = getSelectedRow();
+			if(id == null){
 				return ;
 			}
 			vm.showList = false;
             vm.title = "修改";
             
-            vm.getInfo(${pk.attrname})
+            vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.${classname}.${pk.attrname} == null ? "../${appPrefix}/${pathName}/save" : "../${appPrefix}/${pathName}/update";
+			var url = vm.xmjbxx.id == null ? "../proj/xmjbxx/save" : "../proj/xmjbxx/update";
 			$.ajax({
 				type: "POST",
 			    url: url,
-			    data: JSON.stringify(vm.${classname}),
+			    data: JSON.stringify(vm.xmjbxx),
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
@@ -83,16 +84,16 @@ var vm = new Vue({
 			});
 		},
 		del: function (event) {
-			var ${pk.attrname}s = getSelectedRows();
-			if(${pk.attrname}s == null){
+			var ids = getSelectedRows();
+			if(ids == null){
 				return ;
 			}
 			
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../${appPrefix}/${pathName}/delete",
-				    data: JSON.stringify(${pk.attrname}s),
+				    url: "../proj/xmjbxx/delete",
+				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
@@ -105,9 +106,9 @@ var vm = new Vue({
 				});
 			});
 		},
-		getInfo: function(${pk.attrname}){
-			$.get("../${appPrefix}/${pathName}/info/"+${pk.attrname}, function(r){
-                vm.${classname} = r.${classname};
+		getInfo: function(id){
+			$.get("../proj/xmjbxx/info/"+id, function(r){
+                vm.xmjbxx = r.xmjbxx;
             });
 		},
 		reload: function (event) {

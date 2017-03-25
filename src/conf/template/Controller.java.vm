@@ -1,4 +1,4 @@
-package ${package}.controller;
+package ${package}.web;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Controller;
 import ${package}.model.${className}Entity;
 import ${package}.service.${className}Service;
 import org.marsplatform.core.common.web.Page;
-import org.marsplatform.core.common.web.Response;
+import org.marsplatform.core.common.web.Result;
 
 
 /**
@@ -26,14 +26,14 @@ import org.marsplatform.core.common.web.Response;
  * @date ${datetime}
  */
 @Controller
-@RequestMapping("${pathName}")
+@RequestMapping("/${appPrefix}/${pathName}")
 public class ${className}Controller {
 	@Autowired
 	private ${className}Service ${classname}Service;
 	
 	@RequestMapping("/${pathName}.html")
 	public String list(){
-		return "${pathName}/${pathName}.html";
+		return "app/${appPrefix}/${pathName}.html";
 	}
 	
 	/**
@@ -41,8 +41,8 @@ public class ${className}Controller {
 	 */
 	@ResponseBody
 	@RequestMapping("/list")
-	@RequiresPermissions("${pathName}:list")
-	public Response list(Integer curPage, Integer limit){
+	@RequiresPermissions("${appPrefix}:${pathName}:list")
+	public Result list(Integer curPage, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (curPage - 1) * limit);
 		map.put("limit", limit);
@@ -53,7 +53,7 @@ public class ${className}Controller {
 		
 		Page page = new Page(${classname}List, total, limit, curPage);
 		
-		return Response.ok().put("page", page);
+		return Result.ok().put("page", page);
 	}
 	
 	
@@ -62,11 +62,11 @@ public class ${className}Controller {
 	 */
 	@ResponseBody
 	@RequestMapping("/info/{${pk.attrname}}")
-	@RequiresPermissions("${pathName}:info")
-	public Response info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
+	@RequiresPermissions("${appPrefix}:${pathName}:info")
+	public Result info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
 		${className}Entity ${classname} = ${classname}Service.queryObject(${pk.attrname});
 		
-		return Response.ok().put("${classname}", ${classname});
+		return Result.ok().put("${classname}", ${classname});
 	}
 	
 	/**
@@ -74,11 +74,11 @@ public class ${className}Controller {
 	 */
 	@ResponseBody
 	@RequestMapping("/save")
-	@RequiresPermissions("${pathName}:save")
-	public Response save(@RequestBody ${className}Entity ${classname}){
+	@RequiresPermissions("${appPrefix}:${pathName}:save")
+	public Result save(@RequestBody ${className}Entity ${classname}){
 		${classname}Service.save(${classname});
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -86,11 +86,11 @@ public class ${className}Controller {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("${pathName}:update")
-	public Response update(@RequestBody ${className}Entity ${classname}){
+	@RequiresPermissions("${appPrefix}:${pathName}:update")
+	public Result update(@RequestBody ${className}Entity ${classname}){
 		${classname}Service.update(${classname});
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -98,11 +98,11 @@ public class ${className}Controller {
 	 */
 	@ResponseBody
 	@RequestMapping("/delete")
-	@RequiresPermissions("${pathName}:delete")
-	public Response delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
+	@RequiresPermissions("${appPrefix}:${pathName}:delete")
+	public Result delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
 		${classname}Service.deleteBatch(${pk.attrname}s);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 }

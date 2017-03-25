@@ -56,7 +56,7 @@ public class CodeGenerator {
 		tableEntity.setTableName(table.get("tableName"));
 		tableEntity.setComments(table.get("tableComment"));
 		//表名转换成Java类名
-		String className = tableToJava(tableEntity.getTableName(), config.getString("tablePrefix"));
+		String className = tableToJava(tableEntity.getTableName(), config.getString("appPrefix"));
 		tableEntity.setClassName(className);
 		tableEntity.setClassname(StringUtils.uncapitalize(className));
 		
@@ -109,6 +109,7 @@ public class CodeGenerator {
 		map.put("package", config.getString("package"));
 		map.put("author", config.getString("author"));
 		map.put("email", config.getString("email"));
+		map.put("appPrefix", config.getString("appPrefix"));
 		map.put("datetime", DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
         VelocityContext context = new VelocityContext(map);
         
@@ -122,7 +123,7 @@ public class CodeGenerator {
 			
 			try {
 				//添加到zip
-				zip.putNextEntry(new ZipEntry(getFileName(template, tableEntity.getClassName(), config.getString("package"))));  
+				zip.putNextEntry(new ZipEntry(getFileName(template, tableEntity.getClassName(), config)));  
 				IOUtils.write(sw.toString(), zip, "UTF-8");
 				IOUtils.closeQuietly(sw);
 				zip.closeEntry();
@@ -143,9 +144,9 @@ public class CodeGenerator {
 	/**
 	 * 表名转换成Java类名
 	 */
-	public static String tableToJava(String tableName, String tablePrefix) {
-		if(StringUtils.isNotBlank(tablePrefix)){
-			tableName = tableName.replace(tablePrefix, "");
+	public static String tableToJava(String tableName, String appPrefix) {
+		if(StringUtils.isNotBlank(appPrefix)){
+			tableName = tableName.replace(appPrefix + "_", "");
 		}
 		return columnToJava(tableName);
 	}
@@ -164,8 +165,12 @@ public class CodeGenerator {
 	/**
 	 * 获取文件名
 	 */
-	public static String getFileName(String template, String className, String packageName){
+	public static String getFileName(String template, String className, Configuration config){
+		
 		String packagePath = "";
+		String packageName = config.getString("package");
+		String appPrefix = config.getString("appPrefix");
+		
 		if(StringUtils.isNotBlank(packageName)){
 			packagePath = packageName.replace(".", File.separator) + File.separator;
 		}
@@ -191,15 +196,15 @@ public class CodeGenerator {
 		}
 		
 		if(template.contains("Controller.java.vm")){
-			return packagePath + "controller" + File.separator + className + "Controller.java";
+			return packagePath + "web" + File.separator + className + "Controller.java";
 		}
 		
 		if(template.contains("list.html.vm")){
-			return "html" + File.separator + className.toLowerCase() + ".html";
+			return "page" + File.separator + "app" + File.separator + appPrefix + File.separator + className.toLowerCase() + ".html";
 		}
 		
 		if(template.contains("list.js.vm")){
-			return "js" + File.separator + className.toLowerCase() + ".js";
+			return "js" + File.separator + "app" + File.separator + appPrefix + File.separator + className.toLowerCase() + ".js";
 		}
 		
 		return null;

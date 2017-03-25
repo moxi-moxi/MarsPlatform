@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.marsplatform.core.common.web.Response;
+import org.marsplatform.core.common.web.Result;
 import org.marsplatform.core.common.web.Page;
 import org.marsplatform.extend.system.service.SysGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class SysGeneratorController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:generator:list")
-	public Response list(String tableName, Integer curPage, Integer limit){
+	public Result list(String tableName, Integer curPage, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("tableName", tableName);
 		map.put("offset", (curPage - 1) * limit);
@@ -47,7 +47,7 @@ public class SysGeneratorController {
 		
 		Page page = new Page(list, total, limit, curPage);
 		
-		return Response.ok().put("page", page);
+		return Result.ok().put("page", page);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class SysGeneratorController {
 		byte[] data = sysGeneratorService.generateCode(tableNames);
 		
 		response.reset();  
-        response.setHeader("Content-Disposition", "attachment; filename=\"mars-platform.zip\"");  
+        response.setHeader("Content-Disposition", "attachment; filename=\"code.zip\"");  
         response.addHeader("Content-Length", "" + data.length);  
         response.setContentType("application/octet-stream; charset=UTF-8");  
   

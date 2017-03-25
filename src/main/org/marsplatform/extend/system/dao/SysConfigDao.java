@@ -1,6 +1,7 @@
 package org.marsplatform.extend.system.dao;
 
 import org.apache.ibatis.annotations.Param;
+import org.marsplatform.core.common.dao.BaseDao;
 import org.marsplatform.extend.system.model.SysConfigEntity;
 
 /**

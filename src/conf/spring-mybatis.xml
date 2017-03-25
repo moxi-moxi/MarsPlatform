@@ -61,6 +61,6 @@
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="org.marsplatform.extend.system.dao" />
+		<property name="basePackage" value="org.marsplatform.**.dao" />
 	</bean>
 </beans>

@@ -2,6 +2,7 @@ package org.marsplatform.extend.system.dao;
 
 import java.util.List;
 
+import org.marsplatform.core.common.dao.BaseDao;
 import org.marsplatform.extend.system.model.SysRoleMenuEntity;
 
 /**

@@ -25,12 +25,12 @@ $(function () {
         pager: "#jqGridPager",
         jsonReader : {
             root: "page.list",
-            page: "page.currPage",
+            page: "page.curPage",
             total: "page.totalPage",
             records: "page.totalCount"
         },
         prmNames : {
-            page:"page", 
+            page:"curPage", 
             rows:"limit", 
             order: "order"
         },
@@ -42,7 +42,7 @@ $(function () {
 });
 
 var vm = new Vue({
-	el:'#rrapp',
+	el:'#app',
 	data:{
 		q:{
 			username: null

@@ -23,7 +23,7 @@
 <!-- ADD THE CLASS layout-boxed TO GET A BOXED LAYOUT -->
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
-<div class="wrapper" id="rrapp" v-cloak>
+<div class="wrapper" id="app" v-cloak>
   <header class="main-header">
     <a href="javascript:void(0);" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -95,28 +95,28 @@
   <div class="control-sidebar-bg"></div>
   
   <!-- 修改密码 -->
-<div id="passwordLayer" style="display: none;">
+  <div id="passwordLayer" style="display: none;">
 	<form class="form-horizontal">
 	<div class="form-group">
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">账号</div>
-		    <span class="label label-success" style="vertical-align: bottom;">{{user.username}}</span>
+      <div class="form-group">
+	    <div class="col-sm-2 control-label">账号</div>
+		  <span class="label label-success" style="vertical-align: bottom;">{{user.username}}</span>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label">原密码</div>
-		   	<div class="col-sm-10">
-		      <input type="password" class="form-control" v-model="password" placeholder="原密码"/>
-		    </div>
+		  <div class="col-sm-2 control-label">原密码</div>
+		  <div class="col-sm-10">
+		    <input type="password" class="form-control" v-model="password" placeholder="原密码"/>
+		  </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label">新密码</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="newPassword" placeholder="新密码"/>
-		    </div>
+		  <div class="col-sm-2 control-label">新密码</div>
+		  <div class="col-sm-10">
+		    <input type="text" class="form-control" v-model="newPassword" placeholder="新密码"/>
+		  </div>
 		</div>
 	</div>
 	</form>
-</div>
+  </div>
 
 </div>
 <!-- ./wrapper -->

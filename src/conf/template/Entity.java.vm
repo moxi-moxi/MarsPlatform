@@ -25,13 +25,13 @@ public class ${className}Entity implements Serializable {
 
 #foreach ($column in $columns)
 	/**
-	 * 璁剧疆锛�${column.comments}
+	 * 设置：${column.comments}
 	 */
 	public void set${column.attrName}($column.attrType $column.attrname) {
 		this.$column.attrname = $column.attrname;
 	}
 	/**
-	 * 鑾峰彇锛�${column.comments}
+	 * 获取：${column.comments}
 	 */
 	public $column.attrType get${column.attrName}() {
 		return $column.attrname;

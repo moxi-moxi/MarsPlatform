@@ -19,12 +19,12 @@ $(function () {
         pager: "#jqGridPager",
         jsonReader : {
             root: "page.list",
-            page: "page.currPage",
+            page: "page.curPage",
             total: "page.totalPage",
             records: "page.totalCount"
         },
         prmNames : {
-            page:"page", 
+            page:"curPage", 
             rows:"limit", 
             order: "order"
         },
@@ -55,7 +55,7 @@ var setting = {
 var ztree;
 	
 var vm = new Vue({
-	el:'#rrapp',
+	el:'#app',
 	data:{
 		q:{
 			roleName: null

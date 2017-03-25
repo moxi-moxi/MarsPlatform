@@ -15,7 +15,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.subject.Subject;
-import org.marsplatform.core.common.web.Response;
+import org.marsplatform.core.common.web.Result;
 import org.marsplatform.extend.system.security.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +36,7 @@ public class SysLoginController {
 	private Producer producer;
 	
 	@RequestMapping("captcha.jpg")
-	public void captcha(HttpServletResponse response)throws ServletException, IOException {
+	public void captcha(HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Cache-Control", "no-store, no-cache");
         response.setContentType("image/jpeg");
 
@@ -56,10 +56,10 @@ public class SysLoginController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/sys/login", method = RequestMethod.POST)
-	public Response login(String username, String password, String captcha)throws IOException {
+	public Result login(String username, String password, String captcha)throws IOException {
 		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
 		if(!captcha.equalsIgnoreCase(kaptcha)){
-			return Response.error("验证码不正确");
+			return Result.error("验证码不正确");
 		}
 		
 		try{
@@ -69,16 +69,16 @@ public class SysLoginController {
 			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 			subject.login(token);
 		}catch (UnknownAccountException e) {
-			return Response.error(e.getMessage());
+			return Result.error(e.getMessage());
 		}catch (IncorrectCredentialsException e) {
-			return Response.error(e.getMessage());
+			return Result.error(e.getMessage());
 		}catch (LockedAccountException e) {
-			return Response.error(e.getMessage());
+			return Result.error(e.getMessage());
 		}catch (AuthenticationException e) {
-			return Response.error("账户验证失败");
+			return Result.error("账户验证失败");
 		}
 	    
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**

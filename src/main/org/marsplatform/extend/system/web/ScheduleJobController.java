@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.marsplatform.core.common.web.Response;
+import org.marsplatform.core.common.web.Result;
 import org.marsplatform.core.common.web.Page;
 import org.marsplatform.core.exception.GlobalException;
 import org.marsplatform.extend.system.model.ScheduleJobEntity;
@@ -32,7 +32,7 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:schedule:list")
-	public Response list(String beanName, Integer curPage, Integer limit){
+	public Result list(String beanName, Integer curPage, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("beanName", beanName);
 		map.put("offset", (curPage - 1) * limit);
@@ -44,7 +44,7 @@ public class ScheduleJobController {
 		
 		Page page = new Page(jobList, total, limit, curPage);
 		
-		return Response.ok().put("page", page);
+		return Result.ok().put("page", page);
 	}
 	
 	/**
@@ -52,10 +52,10 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/info/{jobId}")
 	@RequiresPermissions("sys:schedule:info")
-	public Response info(@PathVariable("jobId") Long jobId){
+	public Result info(@PathVariable("jobId") Long jobId){
 		ScheduleJobEntity schedule = scheduleJobService.queryObject(jobId);
 		
-		return Response.ok().put("schedule", schedule);
+		return Result.ok().put("schedule", schedule);
 	}
 	
 	/**
@@ -63,13 +63,13 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("sys:schedule:save")
-	public Response save(@RequestBody ScheduleJobEntity scheduleJob){
+	public Result save(@RequestBody ScheduleJobEntity scheduleJob){
 		//数据校验
 		verifyForm(scheduleJob);
 		
 		scheduleJobService.save(scheduleJob);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -77,13 +77,13 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("sys:schedule:update")
-	public Response update(@RequestBody ScheduleJobEntity scheduleJob){
+	public Result update(@RequestBody ScheduleJobEntity scheduleJob){
 		//数据校验
 		verifyForm(scheduleJob);
 				
 		scheduleJobService.update(scheduleJob);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -91,10 +91,10 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("sys:schedule:delete")
-	public Response delete(@RequestBody Long[] jobIds){
+	public Result delete(@RequestBody Long[] jobIds){
 		scheduleJobService.deleteBatch(jobIds);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -102,10 +102,10 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/run")
 	@RequiresPermissions("sys:schedule:run")
-	public Response run(@RequestBody Long[] jobIds){
+	public Result run(@RequestBody Long[] jobIds){
 		scheduleJobService.run(jobIds);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -113,10 +113,10 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/pause")
 	@RequiresPermissions("sys:schedule:pause")
-	public Response pause(@RequestBody Long[] jobIds){
+	public Result pause(@RequestBody Long[] jobIds){
 		scheduleJobService.pause(jobIds);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -124,10 +124,10 @@ public class ScheduleJobController {
 	 */
 	@RequestMapping("/resume")
 	@RequiresPermissions("sys:schedule:resume")
-	public Response resume(@RequestBody Long[] jobIds){
+	public Result resume(@RequestBody Long[] jobIds){
 		scheduleJobService.resume(jobIds);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**

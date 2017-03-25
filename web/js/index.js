@@ -30,7 +30,7 @@ $(window).on('resize', function() {
 Vue.component('menuItem',menuItem);
 
 var vm = new Vue({
-	el:'#rrapp',
+	el:'#app',
 	data:{
 		user:{},
 		menuList:{},

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.marsplatform.core.common.web.Response;
+import org.marsplatform.core.common.web.Result;
 import org.marsplatform.core.common.web.Page;
 import org.marsplatform.core.exception.GlobalException;
 import org.marsplatform.extend.system.model.SysConfigEntity;
@@ -32,7 +32,7 @@ public class SysConfigController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:config:list")
-	public Response list(String key, Integer curPage, Integer limit){
+	public Result list(String key, Integer curPage, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("key", key);
 		map.put("offset", (curPage - 1) * limit);
@@ -44,7 +44,7 @@ public class SysConfigController extends AbstractController {
 		
 		Page page = new Page(configList, total, limit, curPage);
 		
-		return Response.ok().put("page", page);
+		return Result.ok().put("page", page);
 	}
 	
 	
@@ -53,10 +53,10 @@ public class SysConfigController extends AbstractController {
 	 */
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("sys:config:info")
-	public Response info(@PathVariable("id") Long id){
+	public Result info(@PathVariable("id") Long id){
 		SysConfigEntity config = sysConfigService.queryObject(id);
 		
-		return Response.ok().put("config", config);
+		return Result.ok().put("config", config);
 	}
 	
 	/**
@@ -64,13 +64,13 @@ public class SysConfigController extends AbstractController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("sys:config:save")
-	public Response save(@RequestBody SysConfigEntity config){
+	public Result save(@RequestBody SysConfigEntity config){
 		//参数校验
 		verifyForm(config);
 
 		sysConfigService.save(config);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -78,13 +78,13 @@ public class SysConfigController extends AbstractController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("sys:config:update")
-	public Response update(@RequestBody SysConfigEntity config){
+	public Result update(@RequestBody SysConfigEntity config){
 		//参数校验
 		verifyForm(config);
 		
 		sysConfigService.update(config);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
@@ -92,10 +92,10 @@ public class SysConfigController extends AbstractController {
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("sys:config:delete")
-	public Response delete(@RequestBody Long[] ids){
+	public Result delete(@RequestBody Long[] ids){
 		sysConfigService.deleteBatch(ids);
 		
-		return Response.ok();
+		return Result.ok();
 	}
 	
 	/**
