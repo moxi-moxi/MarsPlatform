@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../proj/xmjbxx/list',
+        url: '../../proj/xmjbxx/list',
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', width: 50, key: true },
@@ -67,7 +67,7 @@ var vm = new Vue({
             vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.xmjbxx.id == null ? "../proj/xmjbxx/save" : "../proj/xmjbxx/update";
+			var url = vm.xmjbxx.id == null ? "../../proj/xmjbxx/save" : "../../proj/xmjbxx/update";
 			$.ajax({
 				type: "POST",
 			    url: url,
@@ -92,7 +92,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../proj/xmjbxx/delete",
+				    url: "../../proj/xmjbxx/delete",
 				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){
@@ -107,7 +107,7 @@ var vm = new Vue({
 			});
 		},
 		getInfo: function(id){
-			$.get("../proj/xmjbxx/info/"+id, function(r){
+			$.get("../../proj/xmjbxx/info/"+id, function(r){
                 vm.xmjbxx = r.xmjbxx;
             });
 		},

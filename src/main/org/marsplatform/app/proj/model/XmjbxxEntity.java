@@ -10,12 +10,12 @@ import java.util.Date;
  * 
  * @author mox
  * @email moxi-moxi@hotmail.com
- * @date 2017-03-25 12:09:23
+ * @date 2017-03-27 18:32:22
  */
 public class XmjbxxEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	//
+	//标识
 	private Long id;
 	//项目名称
 	private String xmmc;
@@ -35,13 +35,13 @@ public class XmjbxxEntity implements Serializable {
 	private String xmms;
 
 	/**
-	 * 设置：
+	 * 设置：标识
 	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 	/**
-	 * 获取：
+	 * 获取：标识
 	 */
 	public Long getId() {
 		return id;
