@@ -1,6 +1,6 @@
-package ${package}.service;
+package ${package}.${appName}.service;
 
-import ${package}.model.${className}Entity;
+import ${package}.${appName}.model.${className}Entity;
 
 import java.util.List;
 import java.util.Map;

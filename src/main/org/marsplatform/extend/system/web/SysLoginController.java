@@ -35,6 +35,13 @@ public class SysLoginController {
 	@Autowired
 	private Producer producer;
 	
+	
+	@RequestMapping("index.html")
+	public String index(){
+		return "sys/index.html";
+	}
+	
+	
 	@RequestMapping("captcha.jpg")
 	public void captcha(HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Cache-Control", "no-store, no-cache");
@@ -87,7 +94,7 @@ public class SysLoginController {
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout() {
 		ShiroUtils.logout();
-		return "redirect:login.html";
+		return "redirect:sys/login.html";
 	}
 	
 }

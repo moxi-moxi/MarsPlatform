@@ -3,9 +3,9 @@
 <head>
 <title>${comments}</title>
 #set($header='#parse("sys/header.html")')
-#set($save='#if($shiro.hasPermission("'+${appPrefix}+':'+${pathName}+':save"))')
-#set($update='#if($shiro.hasPermission("'+${appPrefix}+':'+${pathName}+':update"))')
-#set($delete='#if($shiro.hasPermission("'+${appPrefix}+':'+${pathName}+':delete"))')
+#set($save='#if($shiro.hasPermission("'+${appName}+':'+${pathName}+':save"))')
+#set($update='#if($shiro.hasPermission("'+${appName}+':'+${pathName}+':update"))')
+#set($delete='#if($shiro.hasPermission("'+${appName}+':'+${pathName}+':delete"))')
 #set($end='#end')
 $header
 </head>
@@ -51,6 +51,6 @@ $header
 	</div>
 </div>
 
-<script src="${rc.contextPath}/js/app/${appPrefix}/${pathName}.js?_${date.systemTime}"></script>
+<script src="${rc.contextPath}/app/${appName}/js/${pathName}.js?_${date.systemTime}"></script>
 </body>
 </html>

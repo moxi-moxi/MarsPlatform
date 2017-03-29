@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="${rc.contextPath}/statics/libs/jquery.min.js"></script>
-<script src="${rc.contextPath}/statics/plugins/echarts/echarts.min.js"></script>
+<script src="${rc.contextPath}/statics/js/jquery.min.js"></script>
+<script src="${rc.contextPath}/statics/plugin/echarts/echarts.min.js"></script>
 <title>地图</title>
 </head>
 <body>
@@ -13,7 +13,7 @@
 	
 		
 		
-		$.get('${rc.contextPath}/statics/plugins/echarts/map/world.json', function (chinaJson) {
+		$.get('${rc.contextPath}/statics/plugin/echarts/map/world.json', function (chinaJson) {
 		    echarts.registerMap('world', chinaJson);
 		    var chart = echarts.init(document.getElementById('map2'));
 		    chart.setOption({
@@ -523,7 +523,7 @@
 		        }
 		    ]
 		};
-		$.get('${rc.contextPath}/statics/plugins/echarts/map/china.json', function (chinaJson) {
+		$.get('${rc.contextPath}/statics/plugin/echarts/map/china.json', function (chinaJson) {
 		    echarts.registerMap('china', chinaJson);
 		    var chart = echarts.init(document.getElementById('map1'));
 		    chart.setOption(option);

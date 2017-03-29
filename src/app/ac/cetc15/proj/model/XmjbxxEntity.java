@@ -1,4 +1,4 @@
-package org.marsplatform.app.proj.model;
+package ac.cetc15.proj.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.Date;
  * 
  * @author mox
  * @email moxi-moxi@hotmail.com
- * @date 2017-03-27 18:32:22
+ * @date 2017-03-29 14:26:15
  */
 public class XmjbxxEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

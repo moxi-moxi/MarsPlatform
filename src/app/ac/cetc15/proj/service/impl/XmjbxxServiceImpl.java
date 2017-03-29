@@ -1,4 +1,4 @@
-package org.marsplatform.app.proj.service.impl;
+package ac.cetc15.proj.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import org.marsplatform.app.proj.dao.XmjbxxDao;
-import org.marsplatform.app.proj.model.XmjbxxEntity;
-import org.marsplatform.app.proj.service.XmjbxxService;
+import ac.cetc15.proj.dao.XmjbxxDao;
+import ac.cetc15.proj.model.XmjbxxEntity;
+import ac.cetc15.proj.service.XmjbxxService;
 
 
 

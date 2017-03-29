@@ -56,11 +56,12 @@
 		<property name="mapperLocations">
 			<list>
 				<value>classpath*:org/marsplatform/**/*Dao.xml</value>
+				<value>classpath*:ac/cetc15/**/*Dao.xml</value>
 			</list>
 		</property>
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="org.marsplatform.**.dao" />
+		<property name="basePackage" value="org.marsplatform.**.dao,ac.cetc15.**.dao" />
 	</bean>
 </beans>

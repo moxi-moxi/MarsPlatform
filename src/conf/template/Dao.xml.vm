@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="${package}.dao.${className}Dao">
+<mapper namespace="${package}.${appName}.dao.${className}Dao">
 
-	<select id="queryObject" resultType="${package}.model.${className}Entity">
+	<select id="queryObject" resultType="${package}.${appName}.model.${className}Entity">
 		select * from ${tableName} where ${pk.columnName} = #{value}
 	</select>
 
-	<select id="queryList" resultType="${package}.model.${className}Entity">
+	<select id="queryList" resultType="${package}.${appName}.model.${className}Entity">
 		select * from ${tableName} 
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -18,7 +18,7 @@
 		select count(*) from ${tableName} 
 	</select>
 	 
-	<insert id="save" parameterType="${package}.model.${className}Entity"#if($pk.extra == 'auto_increment') useGeneratedKeys="true" keyProperty="$pk.attrname"#end>
+	<insert id="save" parameterType="${package}.${appName}.model.${className}Entity"#if($pk.extra == 'auto_increment') useGeneratedKeys="true" keyProperty="$pk.attrname"#end>
 		insert into ${tableName}
 		(
 #foreach($column in $columns)
@@ -39,7 +39,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="${package}.model.${className}Entity">
+	<update id="update" parameterType="${package}.${appName}.model.${className}Entity">
 		update ${tableName} 
 		<set>
 #foreach($column in $columns)

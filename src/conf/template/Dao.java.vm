@@ -1,6 +1,6 @@
-package ${package}.dao;
+package ${package}.${appName}.dao;
 
-import ${package}.model.${className}Entity;
+import ${package}.${appName}.model.${className}Entity;
 import org.marsplatform.core.common.dao.BaseDao;
 
 /**

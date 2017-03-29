@@ -1,4 +1,4 @@
-package org.marsplatform.app.proj.web;
+package ac.cetc15.proj.web;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
 
-import org.marsplatform.app.proj.model.XmjbxxEntity;
-import org.marsplatform.app.proj.service.XmjbxxService;
+import ac.cetc15.proj.model.XmjbxxEntity;
+import ac.cetc15.proj.service.XmjbxxService;
 import org.marsplatform.core.common.web.Page;
 import org.marsplatform.core.common.web.Result;
 
@@ -23,7 +23,7 @@ import org.marsplatform.core.common.web.Result;
  * 
  * @author mox
  * @email moxi-moxi@hotmail.com
- * @date 2017-03-27 18:32:22
+ * @date 2017-03-29 14:26:15
  */
 @Controller
 @RequestMapping("/proj/xmjbxx")

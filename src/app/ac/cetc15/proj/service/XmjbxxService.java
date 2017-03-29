@@ -1,6 +1,6 @@
-package org.marsplatform.app.proj.service;
+package ac.cetc15.proj.service;
 
-import org.marsplatform.app.proj.model.XmjbxxEntity;
+import ac.cetc15.proj.model.XmjbxxEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
  * 
  * @author mox
  * @email moxi-moxi@hotmail.com
- * @date 2017-03-27 18:32:22
+ * @date 2017-03-29 14:26:15
  */
 public interface XmjbxxService {
 	

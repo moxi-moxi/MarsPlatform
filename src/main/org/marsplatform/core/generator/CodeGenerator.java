@@ -56,7 +56,7 @@ public class CodeGenerator {
 		tableEntity.setTableName(table.get("tableName"));
 		tableEntity.setComments(table.get("tableComment"));
 		//表名转换成Java类名
-		String className = tableToJava(tableEntity.getTableName(), config.getString("appPrefix"));
+		String className = tableToJava(tableEntity.getTableName(), config.getString("appName"));
 		tableEntity.setClassName(className);
 		tableEntity.setClassname(StringUtils.uncapitalize(className));
 		
@@ -109,7 +109,7 @@ public class CodeGenerator {
 		map.put("package", config.getString("package"));
 		map.put("author", config.getString("author"));
 		map.put("email", config.getString("email"));
-		map.put("appPrefix", config.getString("appPrefix"));
+		map.put("appName", config.getString("appName"));
 		map.put("datetime", DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
         VelocityContext context = new VelocityContext(map);
         
@@ -144,9 +144,9 @@ public class CodeGenerator {
 	/**
 	 * 表名转换成Java类名
 	 */
-	public static String tableToJava(String tableName, String appPrefix) {
-		if(StringUtils.isNotBlank(appPrefix)){
-			tableName = tableName.replace(appPrefix + "_", "");
+	public static String tableToJava(String tableName, String appName) {
+		if(StringUtils.isNotBlank(appName)){
+			tableName = tableName.replace(appName + "_", "");
 		}
 		return columnToJava(tableName);
 	}
@@ -169,10 +169,11 @@ public class CodeGenerator {
 		
 		String packagePath = "";
 		String packageName = config.getString("package");
-		String appPrefix = config.getString("appPrefix");
+		String appName = config.getString("appName");
+		
 		
 		if(StringUtils.isNotBlank(packageName)){
-			packagePath = packageName.replace(".", File.separator) + File.separator;
+			packagePath = ("java." + packageName + "." + appName).replace(".", File.separator) + File.separator;
 		}
 		
 		if(template.contains("Entity.java.vm")){
@@ -200,11 +201,11 @@ public class CodeGenerator {
 		}
 		
 		if(template.contains("list.html.vm")){
-			return "page" + File.separator + "app" + File.separator + appPrefix + File.separator + className.toLowerCase() + ".html";
+			return "web" + File.separator + "WEB-INF" + File.separator + "page" + File.separator + "app" + File.separator + appName + File.separator + className.toLowerCase() + ".html";
 		}
 		
 		if(template.contains("list.js.vm")){
-			return "js" + File.separator + "app" + File.separator + appPrefix + File.separator + className.toLowerCase() + ".js";
+			return "web" + File.separator + "app" + File.separator + appName + File.separator + "js" + File.separator +  className.toLowerCase() + ".js";
 		}
 		
 		return null;
