@@ -1,5 +1,5 @@
 layui.config({
-  base:'js/'
+  base:'sys/js/'
 }).use(['navtab'],function(){
 	window.jQuery = window.$ = layui.jquery;
 	window.layer = layui.layer;
