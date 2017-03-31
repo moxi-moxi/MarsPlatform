@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script src="${rc.contextPath}/statics/js/jquery.min.js"></script>
-<script src="${rc.contextPath}/statics/plugin/echarts/echarts.min.js"></script>
-<title>地图</title>
+<title>地图应用</title>
+#parse("sys/header.html")
 </head>
 <body>
 	<div id="map1" style="width: 800px; height: 600px;"></div>
 	<div id="map2" style="width: 600px; height: 400px;"></div>
 	<script>
-	
-		
 		
 		$.get('${rc.contextPath}/statics/plugin/echarts/map/world.json', function (chinaJson) {
 		    echarts.registerMap('world', chinaJson);
