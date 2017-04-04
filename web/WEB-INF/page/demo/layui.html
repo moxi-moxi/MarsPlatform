@@ -3,10 +3,19 @@
 <head>
 <title>LayUI组件</title>
 #parse("sys/header.html")
+<link rel="stylesheet" href="${rc.contextPath}/statics/plugin/layui/css/layui.css">
+<script src="${rc.contextPath}/statics/plugin/layui/lay/dest/layui.all.js"></script>
 </head>
 <body>
-	<div id="main">
-	LayUI
-	</div>
+<script>
+ 
+;!function(){
+	  //当使用了 layui.all.js，无需再执行layui.use()方法
+	  var from = layui.form()
+	  ,layer = layui.layer;
+	  
+	  //…
+	}();
+</script> 
 </body>
 </html>
