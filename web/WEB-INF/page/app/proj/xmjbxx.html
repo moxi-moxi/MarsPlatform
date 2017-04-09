@@ -7,21 +7,57 @@
 <body>
 <div id="app" v-cloak>
 	<div v-show="showList">
-		<div class="grid-btn">
-			#if($shiro.hasPermission("proj:xmjbxx:save"))
-			<a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			#end
-			#if($shiro.hasPermission("proj:xmjbxx:update"))
-			<a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			#end
-			#if($shiro.hasPermission("proj:xmjbxx:delete"))
-			<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			#end
+		
+		
+		
+		<div class="btn-group col-sm-8">
+				
+			<a href="#" class="btn btn-link" role="button">所有项目</a>
+			<a href="#" class="btn btn-link" role="button">未开始</a>
+			<a href="#" class="btn btn-link" role="button">进行中</a>
+			<a href="#" class="btn btn-link" role="button">已暂停</a>
+			<a href="#" class="btn btn-link" role="button">已完成</a>
+			
+			
+			<div class="btn-group">
+				<a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button">
+					项目性质 <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#">前期跟踪</a></li>
+					<li><a href="#">正式启动</a></li>
+				</ul>
+			</div>
+			<div class="btn-group">
+				<a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button">
+					项目类型 <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#">论证</a></li>
+					<li><a href="#">研制</a></li>
+					<li><a href="#">集成</a></li>
+				</ul>
+			</div>
 		</div>
-	    <table id="jqGrid"></table>
-	    <div id="jqGridPager"></div>
+		<div class="grid-btn col-sm-4">
+			#if($shiro.hasPermission("proj:xmjbxx:save"))
+			<a class="btn btn-primary pull-right" @click="add"><i class="fa fa-plus"></i>&nbsp;新增项目</a>
+			#end
+			<!-- 
+			#if($shiro.hasPermission("proj:xmjbxx:update"))
+			<a class="btn btn-primary pull-right" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			#end
+		
+			#if($shiro.hasPermission("proj:xmjbxx:delete"))
+			<a class="btn btn-primary pull-right" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			#end
+			-->
+		</div>
+		<div class="col-sm-12">
+		    <table id="jqGrid"></table>
+		    <div id="jqGridPager"></div>
+	    </div>
     </div>
-    
     <div v-show="!showList" class="panel panel-default">
 		<div class="panel-heading">{{title}}</div>
 		<form class="form-horizontal">

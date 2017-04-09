@@ -2,23 +2,25 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: '../../proj/xmjbxx/list',
         datatype: "json",
+        colNames:['序号','项目名称','项目类型','项目性质', '预计合同额', '负责人','起始日期','截止日期','项目描述'],
         colModel: [			
-			{ label: 'id', name: 'id', width: 50, key: true },
-			{ label: '项目名称', name: 'xmmc', width: 80 }, 			
-			{ label: '项目类型  0：研制  1：集成  2：论证  99：其它', name: 'xmlx', width: 80 }, 			
-			{ label: '项目性质  0：明确任务  1：前期跟踪', name: 'xmxz', width: 80 }, 			
-			{ label: '预计合同额', name: 'yjhte', width: 80 }, 			
-			{ label: '负责人  ref@sys_user.user_id', name: 'fzrId', width: 80 }, 			
-			{ label: '起始日期', name: 'qsrq', width: 80 }, 			
-			{ label: '截止日期', name: 'jzrq', width: 80 }, 			
-			{ label: '项目描述', name: 'xmms', width: 80 }			
+			{ index: 'id', name: 'id', width: 50, key: true },
+			{ index: 'xmmc', name: 'xmmc', width: 80 }, 			
+			{ index: 'xmlx', name: 'xmlx', width: 80 }, 			
+			{ index: 'xmxz', name: 'xmxz', width: 80 }, 			
+			{ index: 'yjhte', name: 'yjhte', width: 80 }, 			
+			{ index: 'fzrId', name: 'fzrId', width: 80 }, 			
+			{ index: 'qsrq', name: 'qsrq', width: 80 }, 			
+			{ index: 'jzrq', name: 'jzrq', width: 80 }, 			
+			{ index: 'xmms', name: 'xmms', width: 80 }			
         ],
 		viewrecords: true,
-        height: 385,
+        //height: 330,
         rowNum: 10,
-		rowList : [10,30,50],
+		rowList: [10,30,50],
         rownumbers: true, 
         rownumWidth: 25, 
+        shrinkToFit: false,
         autowidth:true,
         multiselect: true,
         pager: "#jqGridPager",
@@ -35,10 +37,16 @@ $(function () {
         },
         gridComplete:function(){
         	//隐藏grid底部滚动条
-        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	//$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$("#jqGrid").setGridHeight($(window).height() - 126);
         }
     });
 });
+
+$(window).on("resize", function() {
+	$("#jqGrid").setGridHeight($(window).height() - 126);  
+}).resize();
+
 
 var vm = new Vue({
 	el:'#app',
