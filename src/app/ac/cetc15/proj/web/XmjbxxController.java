@@ -16,6 +16,7 @@ import ac.cetc15.proj.model.XmjbxxEntity;
 import ac.cetc15.proj.service.XmjbxxService;
 import org.marsplatform.core.common.web.Page;
 import org.marsplatform.core.common.web.Result;
+import org.marsplatform.core.util.DateUtils;
 
 
 /**
@@ -49,6 +50,7 @@ public class XmjbxxController {
 		
 		//查询列表数据
 		List<XmjbxxEntity> xmjbxxList = xmjbxxService.queryList(map);
+		
 		int total = xmjbxxService.queryTotal(map);
 		
 		Page page = new Page(xmjbxxList, total, limit, curPage);

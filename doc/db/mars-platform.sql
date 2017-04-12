@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-03-31 16:02:50
+Date: 2017-04-12 17:41:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,19 +23,21 @@ CREATE TABLE `proj_xmjbxx` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `xmmc` varchar(100) DEFAULT NULL COMMENT '项目名称',
   `xmlx` tinyint(4) DEFAULT NULL COMMENT '项目类型  0：研制  1：集成  2：论证  99：其它',
-  `xmxz` tinyint(4) DEFAULT NULL COMMENT '项目性质  0：明确任务  1：前期跟踪',
+  `xmxz` tinyint(4) DEFAULT NULL COMMENT '项目性质  0：正式启动  1：前期跟踪',
   `yjhte` int(10) DEFAULT NULL COMMENT '预计合同额',
   `fzr_id` bigint(20) DEFAULT NULL COMMENT '负责人  ref@sys_user.user_id',
   `qsrq` date DEFAULT NULL COMMENT '起始日期',
   `jzrq` date DEFAULT NULL COMMENT '截止日期',
+  `xmzt` tinyint(4) DEFAULT NULL COMMENT '项目状态  0：未开始  1：进行中 2：已暂停 3：已完成',
   `xmms` varchar(500) DEFAULT NULL COMMENT '项目描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='项目基本信息';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='项目基本信息';
 
 -- ----------------------------
 -- Records of proj_xmjbxx
 -- ----------------------------
-INSERT INTO `proj_xmjbxx` VALUES ('1', '南部本级系统', '0', '0', '200', '1', '2016-10-31', '2017-05-31', null);
+INSERT INTO `proj_xmjbxx` VALUES ('1', '南部本级系统', '0', '0', '200', '1', '2016-10-31', '2017-05-31', '1', null);
+INSERT INTO `proj_xmjbxx` VALUES ('3', 'fad', null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
@@ -192,7 +194,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('MarsPlatformScheduler', 'MOX-WNB1490946681537', '1490947359435', '15000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('MarsPlatformScheduler', 'MOX-WNB1491958608288', '1491989978853', '15000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -280,7 +282,7 @@ CREATE TABLE `qrtz_triggers` (
 -- ----------------------------
 -- Records of qrtz_triggers
 -- ----------------------------
-INSERT INTO `qrtz_triggers` VALUES ('MarsPlatformScheduler', 'TASK_1', 'DEFAULT', 'TASK_1', 'DEFAULT', null, '1490949000000', '1490947200000', '5', 'WAITING', 'CRON', '1490318755000', '0', null, '2', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000D4A4F425F504152414D5F4B4559737200366F72672E6D617273706C6174666F726D2E657874656E642E73797374656D2E6D6F64656C2E5363686564756C654A6F62456E7469747900000000000000010200084C00086265616E4E616D657400124C6A6176612F6C616E672F537472696E673B4C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C000E63726F6E45787072657373696F6E71007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C000A6D6574686F644E616D6571007E00094C0006706172616D7371007E00094C000672656D61726B71007E00094C00067374617475737400134C6A6176612F6C616E672F496E74656765723B78707400087461736B546573747372000E6A6176612E7574696C2E44617465686A81014B5974190300007870770800000158BAF593307874000E3020302F3330202A202A202A203F7372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B020000787000000000000000017400047465737474000D6D6172732D706C6174666F726D74000FE69C89E58F82E695B0E6B58BE8AF95737200116A6176612E6C616E672E496E746567657212E2A0A4F781873802000149000576616C75657871007E0013000000007800);
+INSERT INTO `qrtz_triggers` VALUES ('MarsPlatformScheduler', 'TASK_1', 'DEFAULT', 'TASK_1', 'DEFAULT', null, '1491991200000', '1491989400000', '5', 'WAITING', 'CRON', '1490318755000', '0', null, '2', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000D4A4F425F504152414D5F4B4559737200366F72672E6D617273706C6174666F726D2E657874656E642E73797374656D2E6D6F64656C2E5363686564756C654A6F62456E7469747900000000000000010200084C00086265616E4E616D657400124C6A6176612F6C616E672F537472696E673B4C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C000E63726F6E45787072657373696F6E71007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C000A6D6574686F644E616D6571007E00094C0006706172616D7371007E00094C000672656D61726B71007E00094C00067374617475737400134C6A6176612F6C616E672F496E74656765723B78707400087461736B546573747372000E6A6176612E7574696C2E44617465686A81014B5974190300007870770800000158BAF593307874000E3020302F3330202A202A202A203F7372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B020000787000000000000000017400047465737474000D6D6172732D706C6174666F726D74000FE69C89E58F82E695B0E6B58BE8AF95737200116A6176612E6C616E672E496E746567657212E2A0A4F781873802000149000576616C75657871007E0013000000007800);
 INSERT INTO `qrtz_triggers` VALUES ('MarsPlatformScheduler', 'TASK_2', 'DEFAULT', 'TASK_2', 'DEFAULT', null, '1490319000000', '-1', '5', 'PAUSED', 'CRON', '1490318756000', '0', null, '2', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000D4A4F425F504152414D5F4B4559737200366F72672E6D617273706C6174666F726D2E657874656E642E73797374656D2E6D6F64656C2E5363686564756C654A6F62456E7469747900000000000000010200084C00086265616E4E616D657400124C6A6176612F6C616E672F537472696E673B4C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C000E63726F6E45787072657373696F6E71007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C000A6D6574686F644E616D6571007E00094C0006706172616D7371007E00094C000672656D61726B71007E00094C00067374617475737400134C6A6176612F6C616E672F496E74656765723B78707400087461736B546573747372000E6A6176612E7574696C2E44617465686A81014B5974190300007870770800000158C377C4607874000E3020302F3330202A202A202A203F7372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B0200007870000000000000000274000574657374327074000FE697A0E58F82E695B0E6B58BE8AF95737200116A6176612E6C616E672E496E746567657212E2A0A4F781873802000149000576616C75657871007E0013000000017800);
 
 -- ----------------------------
@@ -321,7 +323,7 @@ CREATE TABLE `schedule_job_log` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`log_id`),
   KEY `job_id` (`job_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COMMENT='定时任务日志';
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 COMMENT='定时任务日志';
 
 -- ----------------------------
 -- Records of schedule_job_log
@@ -361,6 +363,80 @@ INSERT INTO `schedule_job_log` VALUES ('32', '1', 'taskTest', 'test', 'mars-plat
 INSERT INTO `schedule_job_log` VALUES ('33', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1028', '2017-03-30 14:00:00');
 INSERT INTO `schedule_job_log` VALUES ('34', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1054', '2017-03-31 15:30:00');
 INSERT INTO `schedule_job_log` VALUES ('35', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1018', '2017-03-31 16:00:00');
+INSERT INTO `schedule_job_log` VALUES ('36', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1006', '2017-03-31 16:30:00');
+INSERT INTO `schedule_job_log` VALUES ('37', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-03-31 17:00:00');
+INSERT INTO `schedule_job_log` VALUES ('38', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-03-31 17:30:00');
+INSERT INTO `schedule_job_log` VALUES ('39', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1098', '2017-04-01 11:00:00');
+INSERT INTO `schedule_job_log` VALUES ('40', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-01 11:30:00');
+INSERT INTO `schedule_job_log` VALUES ('41', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1006', '2017-04-01 13:30:00');
+INSERT INTO `schedule_job_log` VALUES ('42', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1005', '2017-04-01 14:00:00');
+INSERT INTO `schedule_job_log` VALUES ('43', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-01 14:30:00');
+INSERT INTO `schedule_job_log` VALUES ('44', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1008', '2017-04-01 15:00:00');
+INSERT INTO `schedule_job_log` VALUES ('45', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-01 15:30:00');
+INSERT INTO `schedule_job_log` VALUES ('46', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-01 16:00:00');
+INSERT INTO `schedule_job_log` VALUES ('47', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-01 16:30:00');
+INSERT INTO `schedule_job_log` VALUES ('48', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1006', '2017-04-01 17:00:00');
+INSERT INTO `schedule_job_log` VALUES ('49', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1012', '2017-04-01 17:30:00');
+INSERT INTO `schedule_job_log` VALUES ('50', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1078', '2017-04-05 13:30:00');
+INSERT INTO `schedule_job_log` VALUES ('51', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-05 14:00:00');
+INSERT INTO `schedule_job_log` VALUES ('52', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1010', '2017-04-05 14:30:00');
+INSERT INTO `schedule_job_log` VALUES ('53', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-05 15:00:00');
+INSERT INTO `schedule_job_log` VALUES ('54', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-05 15:30:00');
+INSERT INTO `schedule_job_log` VALUES ('55', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1006', '2017-04-05 16:00:00');
+INSERT INTO `schedule_job_log` VALUES ('56', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1005', '2017-04-05 16:30:00');
+INSERT INTO `schedule_job_log` VALUES ('57', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-05 17:00:00');
+INSERT INTO `schedule_job_log` VALUES ('58', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-05 17:30:00');
+INSERT INTO `schedule_job_log` VALUES ('59', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-05 18:00:00');
+INSERT INTO `schedule_job_log` VALUES ('60', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1031', '2017-04-06 10:00:00');
+INSERT INTO `schedule_job_log` VALUES ('61', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-06 10:30:00');
+INSERT INTO `schedule_job_log` VALUES ('62', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-06 11:00:00');
+INSERT INTO `schedule_job_log` VALUES ('63', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-06 11:30:00');
+INSERT INTO `schedule_job_log` VALUES ('64', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1048', '2017-04-07 10:00:00');
+INSERT INTO `schedule_job_log` VALUES ('65', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1006', '2017-04-07 10:30:00');
+INSERT INTO `schedule_job_log` VALUES ('66', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1020', '2017-04-07 13:30:00');
+INSERT INTO `schedule_job_log` VALUES ('67', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-07 15:00:00');
+INSERT INTO `schedule_job_log` VALUES ('68', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-07 15:30:00');
+INSERT INTO `schedule_job_log` VALUES ('69', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1019', '2017-04-07 16:00:00');
+INSERT INTO `schedule_job_log` VALUES ('70', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1002', '2017-04-07 16:30:00');
+INSERT INTO `schedule_job_log` VALUES ('71', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1002', '2017-04-07 17:00:00');
+INSERT INTO `schedule_job_log` VALUES ('72', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1002', '2017-04-07 17:30:00');
+INSERT INTO `schedule_job_log` VALUES ('73', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1078', '2017-04-10 15:00:00');
+INSERT INTO `schedule_job_log` VALUES ('74', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-10 15:30:00');
+INSERT INTO `schedule_job_log` VALUES ('75', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1068', '2017-04-10 16:30:00');
+INSERT INTO `schedule_job_log` VALUES ('76', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1057', '2017-04-10 17:00:00');
+INSERT INTO `schedule_job_log` VALUES ('77', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1050', '2017-04-10 17:30:00');
+INSERT INTO `schedule_job_log` VALUES ('78', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1155', '2017-04-11 15:30:00');
+INSERT INTO `schedule_job_log` VALUES ('79', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1019', '2017-04-11 16:00:00');
+INSERT INTO `schedule_job_log` VALUES ('80', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1033', '2017-04-11 16:30:00');
+INSERT INTO `schedule_job_log` VALUES ('81', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1005', '2017-04-11 17:00:00');
+INSERT INTO `schedule_job_log` VALUES ('82', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-11 17:30:00');
+INSERT INTO `schedule_job_log` VALUES ('83', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-11 18:00:00');
+INSERT INTO `schedule_job_log` VALUES ('84', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-11 18:30:00');
+INSERT INTO `schedule_job_log` VALUES ('85', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-11 19:00:00');
+INSERT INTO `schedule_job_log` VALUES ('86', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1005', '2017-04-11 19:30:00');
+INSERT INTO `schedule_job_log` VALUES ('87', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1002', '2017-04-11 20:00:00');
+INSERT INTO `schedule_job_log` VALUES ('88', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-11 20:30:00');
+INSERT INTO `schedule_job_log` VALUES ('89', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1002', '2017-04-11 21:00:00');
+INSERT INTO `schedule_job_log` VALUES ('90', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-11 21:30:00');
+INSERT INTO `schedule_job_log` VALUES ('91', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1005', '2017-04-11 22:00:00');
+INSERT INTO `schedule_job_log` VALUES ('92', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1077', '2017-04-12 09:00:00');
+INSERT INTO `schedule_job_log` VALUES ('93', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-12 09:30:00');
+INSERT INTO `schedule_job_log` VALUES ('94', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-12 10:00:00');
+INSERT INTO `schedule_job_log` VALUES ('95', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1005', '2017-04-12 10:30:00');
+INSERT INTO `schedule_job_log` VALUES ('96', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-12 11:00:00');
+INSERT INTO `schedule_job_log` VALUES ('97', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-12 11:30:00');
+INSERT INTO `schedule_job_log` VALUES ('98', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-12 12:00:00');
+INSERT INTO `schedule_job_log` VALUES ('99', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1004', '2017-04-12 12:30:00');
+INSERT INTO `schedule_job_log` VALUES ('100', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1005', '2017-04-12 13:00:00');
+INSERT INTO `schedule_job_log` VALUES ('101', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-12 13:30:00');
+INSERT INTO `schedule_job_log` VALUES ('102', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1002', '2017-04-12 14:00:00');
+INSERT INTO `schedule_job_log` VALUES ('103', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-12 14:30:00');
+INSERT INTO `schedule_job_log` VALUES ('104', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1002', '2017-04-12 15:00:00');
+INSERT INTO `schedule_job_log` VALUES ('105', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-12 15:30:00');
+INSERT INTO `schedule_job_log` VALUES ('106', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1002', '2017-04-12 16:00:00');
+INSERT INTO `schedule_job_log` VALUES ('107', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1002', '2017-04-12 16:30:00');
+INSERT INTO `schedule_job_log` VALUES ('108', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-12 17:00:00');
+INSERT INTO `schedule_job_log` VALUES ('109', '1', 'taskTest', 'test', 'mars-platform', '0', null, '1003', '2017-04-12 17:30:00');
 
 -- ----------------------------
 -- Table structure for sys_config

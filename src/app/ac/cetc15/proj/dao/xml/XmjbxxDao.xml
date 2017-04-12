@@ -4,11 +4,39 @@
 <mapper namespace="ac.cetc15.proj.dao.XmjbxxDao">
 
 	<select id="queryObject" resultType="ac.cetc15.proj.model.XmjbxxEntity">
-		select * from proj_xmjbxx where id = #{value}
+		SELECT
+			id,
+			xmmc,
+			xmlx,
+			xmxz,
+			yjhte,
+			fzr_id,
+			(SELECT username FROM sys_user WHERE user_id = fzr_id) AS fzr_name,
+			qsrq,
+			jzrq,
+			xmzt,
+			xmms
+		FROM
+			proj_xmjbxx
+		WHERE
+			id = #{value}
 	</select>
 
 	<select id="queryList" resultType="ac.cetc15.proj.model.XmjbxxEntity">
-		select * from proj_xmjbxx 
+		SELECT
+			id,
+			xmmc,
+			xmlx,
+			xmxz,
+			yjhte,
+			fzr_id,
+			(SELECT username FROM sys_user WHERE user_id = fzr_id) AS fzr_name,
+			qsrq,
+			jzrq,
+			xmzt,
+			xmms
+		FROM
+			proj_xmjbxx 
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -27,7 +55,8 @@
 			`yjhte`, 
 			`fzr_id`, 
 			`qsrq`, 
-			`jzrq`, 
+			`jzrq`,
+			`xmzt`, 
 			`xmms`
 		)
 		values
@@ -39,6 +68,7 @@
 			#{fzrId}, 
 			#{qsrq}, 
 			#{jzrq}, 
+			#{xmzt}, 
 			#{xmms}
 		)
 	</insert>
@@ -53,6 +83,7 @@
 			<if test="fzrId != null">`fzr_id` = #{fzrId}, </if>
 			<if test="qsrq != null">`qsrq` = #{qsrq}, </if>
 			<if test="jzrq != null">`jzrq` = #{jzrq}, </if>
+			<if test="xmzt != null">`xmzt` = #{xmzt}, </if>
 			<if test="xmms != null">`xmms` = #{xmms}</if>
 		</set>
 		where id = #{id}

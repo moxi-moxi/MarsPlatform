@@ -5,6 +5,7 @@ import java.util.Date;
 
 
 
+
 /**
  * 项目基本信息
  * 
@@ -27,10 +28,14 @@ public class XmjbxxEntity implements Serializable {
 	private Integer yjhte;
 	//负责人  ref@sys_user.user_id
 	private Long fzrId;
+	
+	private String fzrName;
 	//起始日期
-	private Date qsrq;
+	private String qsrq;
 	//截止日期
-	private Date jzrq;
+	private String jzrq;
+	
+	private Integer xmzt;
 	//项目描述
 	private String xmms;
 
@@ -109,25 +114,25 @@ public class XmjbxxEntity implements Serializable {
 	/**
 	 * 设置：起始日期
 	 */
-	public void setQsrq(Date qsrq) {
+	public void setQsrq(String qsrq) {
 		this.qsrq = qsrq;
 	}
 	/**
 	 * 获取：起始日期
 	 */
-	public Date getQsrq() {
+	public String getQsrq() {
 		return qsrq;
 	}
 	/**
 	 * 设置：截止日期
 	 */
-	public void setJzrq(Date jzrq) {
+	public void setJzrq(String jzrq) {
 		this.jzrq = jzrq;
 	}
 	/**
 	 * 获取：截止日期
 	 */
-	public Date getJzrq() {
+	public String getJzrq() {
 		return jzrq;
 	}
 	/**
@@ -141,5 +146,19 @@ public class XmjbxxEntity implements Serializable {
 	 */
 	public String getXmms() {
 		return xmms;
+	}
+	
+	public String getFzrName() {
+		return fzrName;
+	}
+	
+	public void setFzrName(String fzrName) {
+		this.fzrName = fzrName;
+	}
+	public Integer getXmzt() {
+		return xmzt;
+	}
+	public void setXmzt(Integer xmzt) {
+		this.xmzt = xmzt;
 	}
 }

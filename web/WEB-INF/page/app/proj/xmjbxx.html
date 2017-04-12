@@ -2,130 +2,159 @@
 <html>
 <head>
 <title>项目基本信息</title>
-#parse("sys/header.html")
+#parse("app/proj/header.html")
 </head>
 <body>
-<div id="app" v-cloak>
-	<div v-show="showList">
-		
-		
-		
-		<div class="btn-group col-sm-8">
+	<div id="app" v-cloak>
+		<div id="btn-bar" style="margin-right:10px">  
+			<div class="btn-group col-sm-8" id="btn-bar-left">
+				<a href="#" class="btn btn-link" role="button"><strong>所有项目</strong></a>
+				<a href="#" class="btn btn-link" role="button"><strong>未开始</strong></a>
+				<a href="#" class="btn btn-link" role="button"><strong>进行中</strong></a>
+				<a href="#" class="btn btn-link" role="button"><strong>已暂停</strong></a>
+				<a href="#" class="btn btn-link" role="button"><strong>已完成</strong></a>
+				<div class="btn-group">
+					<a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button">
+						<strong>项目类型</strong> <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">论证</a></li>
+						<li><a href="#">研制</a></li>
+						<li><a href="#">集成</a></li>
+					</ul>
+				</div>
+				<div class="btn-group">
+					<a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button">
+						<strong>项目性质 </strong><span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">前期跟踪</a></li>
+						<li><a href="#">正式启动</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="btn-group-sm col-sm-4 text-right" id="btn-bar-right">
+				#if($shiro.hasPermission("proj:xmjbxx:save"))
+				<button type="button" class="btn btn-primary" @click="add" data-toggle="modal" data-target="#modal"><i class="fa fa-plus"></i>&nbsp;新增</button>
+				#end
 				
-			<a href="#" class="btn btn-link" role="button">所有项目</a>
-			<a href="#" class="btn btn-link" role="button">未开始</a>
-			<a href="#" class="btn btn-link" role="button">进行中</a>
-			<a href="#" class="btn btn-link" role="button">已暂停</a>
-			<a href="#" class="btn btn-link" role="button">已完成</a>
+				#if($shiro.hasPermission("proj:xmjbxx:update"))
+				<button type="button" class="btn btn-primary" @click="update" data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</button>
+				#end
 			
-			
-			<div class="btn-group">
-				<a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button">
-					项目性质 <span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu" role="menu">
-					<li><a href="#">前期跟踪</a></li>
-					<li><a href="#">正式启动</a></li>
-				</ul>
+				#if($shiro.hasPermission("proj:xmjbxx:delete"))
+				<button type="button" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</button>
+				#end
 			</div>
-			<div class="btn-group">
-				<a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown" role="button">
-					项目类型 <span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu" role="menu">
-					<li><a href="#">论证</a></li>
-					<li><a href="#">研制</a></li>
-					<li><a href="#">集成</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="grid-btn col-sm-4">
-			#if($shiro.hasPermission("proj:xmjbxx:save"))
-			<a class="btn btn-primary pull-right" @click="add"><i class="fa fa-plus"></i>&nbsp;新增项目</a>
-			#end
-			<!-- 
-			#if($shiro.hasPermission("proj:xmjbxx:update"))
-			<a class="btn btn-primary pull-right" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			#end
-		
-			#if($shiro.hasPermission("proj:xmjbxx:delete"))
-			<a class="btn btn-primary pull-right" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			#end
-			-->
 		</div>
 		<div class="col-sm-12">
 		    <table id="jqGrid"></table>
 		    <div id="jqGridPager"></div>
 	    </div>
-    </div>
-    <div v-show="!showList" class="panel panel-default">
-		<div class="panel-heading">{{title}}</div>
-		<form class="form-horizontal">
+	</div>   
+
+    <!-- 模态框（Modal） -->
+	<div class="modal fade" id="modal" tabindex="-1" role="dialog" 
+	   aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+	                  &times;
+					</button>
+	            	<h4 class="modal-title" id="modalLabel">
+	              	 {{title}}
+	           		</h4>
+	         	</div>
+	         	<div class="modal-body">
+	         		<form class="form-horizontal" role="form">
+	         		<div class="form-group align-left">
+						<label class="col-sm-2 control-label" for="xmjbxx.xmmc">项目名称</label>
+					   	<div class="col-sm-10"> 
+					    	<input type="text" class="form-control input-sm" id="xmjbxx.xmmc" v-model="xmjbxx.xmmc" placeholder="项目名称"/>
+						</div>
+					</div>
+								
+					<div class="form-group">
+					    <label class="col-sm-2 control-label" for="xmjbxx.xmlx">项目类型</label>
+					    <div class="col-sm-4">
+					    	<input type="text" class="form-control" id="xmjbxx.xmlx" v-model="xmjbxx.xmlx" placeholder="项目类型  0：研制  1：集成  2：论证  99：其它"/>
+						</div>
+						<label class="col-sm-2 control-label" for="xmjbxx.xmxz">项目性质</label>
+					    <div class="col-sm-4">
+					    	<input type="text" class="form-control" id="xmjbxx.xmxz" v-model="xmjbxx.xmxz" placeholder="项目性质  0：明确任务  1：前期跟踪"/>
+						</div>
+					</div> 
+					<!-- 
+					<div class="form-group">
+					    <label class="col-sm-2 control-label" for="xmjbxx.xmxz">项目性质</label>
+					    <div class="col-sm-10">
+					    	<input type="text" class="form-control" id="xmjbxx.xmxz" v-model="xmjbxx.xmxz" placeholder="项目性质  0：明确任务  1：前期跟踪"/>
+						</div>
+					</div>					
 										
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">项目名称</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="xmjbxx.xmmc" placeholder="项目名称"/>
-			    </div>
-			</div>
-								
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">项目类型  0：研制  1：集成  2：论证  99：其它</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="xmjbxx.xmlx" placeholder="项目类型  0：研制  1：集成  2：论证  99：其它"/>
-			    </div>
-			</div>
-								
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">项目性质  0：明确任务  1：前期跟踪</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="xmjbxx.xmxz" placeholder="项目性质  0：明确任务  1：前期跟踪"/>
-			    </div>
-			</div>
-								
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">预计合同额</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="xmjbxx.yjhte" placeholder="预计合同额"/>
-			    </div>
-			</div>
-								
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">负责人  ref@sys_user.user_id</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="xmjbxx.fzrId" placeholder="负责人  ref@sys_user.user_id"/>
-			    </div>
-			</div>
-								
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">起始日期</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="xmjbxx.qsrq" placeholder="起始日期"/>
-			    </div>
-			</div>
-								
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">截止日期</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="xmjbxx.jzrq" placeholder="截止日期"/>
-			    </div>
-			</div>
-								
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">项目描述</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="xmjbxx.xmms" placeholder="项目描述"/>
-			    </div>
-			</div>
-						
-			<div class="form-group">
-				<div class="col-sm-2 control-label"></div> 
-				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
-				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
-			</div>
-		</form>
-	</div>
-</div>
+					<div class="form-group">
+					   	<label class="col-sm-2 control-label" for="xmjbxx.yjhte">预计合同额</label>
+					    <div class="col-sm-10">
+					    	<input type="text" class="form-control" id="xmjbxx.yjhte" v-model="xmjbxx.yjhte" placeholder="预计合同额"/>
+						</div>
+					</div>
+										
+					<div class="form-group">
+					    <label class="col-sm-2 control-label" for="xmjbxx.fzrId">负责人</label>
+					    <div class="col-sm-10">
+					    	<input type="text" class="form-control" id="xmjbxx.fzrId" v-model="xmjbxx.fzrId" placeholder="负责人  ref@sys_user.user_id"/>
+						</div>
+					</div>
+										
+					<div class="form-group">
+					   	<label class="col-sm-2 control-label" for="xmjbxx.qsrq">起始日期</label>
+					    <div class="col-sm-10">
+					    	<input type="text" class="form-control" id="xmjbxx.qsrq" v-model="xmjbxx.qsrq" placeholder="起始日期"/>
+						</div>
+					</div>
+					
+					<div class="form-group">
+					    <label class="col-sm-2 control-label" for="xmjbxx.jzrq">截止日期</label>
+					    <div class="col-sm-10">
+					    	<input type="text" class="form-control" id="xmjbxx.jzrq" v-model="xmjbxx.jzrq" placeholder="截止日期"/>
+						</div>
+					</div>
+										
+					<div class="form-group">
+					   	<label class="col-sm-2 control-label" for="xmjbxx.xmms">项目描述</label>
+					    <div class="col-sm-10">
+					    	<textarea class="form-control" rows="3" id="xmjbxx.xmms" v-model="xmjbxx.xmms" placeholder="项目描述"></textarea>
+						</div>
+					</div>
+					 -->
+					</form>
+	         	</div>
+	         	<div class="modal-footer align-center">
+					<button type="button" class="btn btn-primary" @click="saveOrUpdate" data-dismiss="modal">确定</button>
+					<button type="button" class="btn btn-warning" @click="reload" data-dismiss="modal">返回</button>
+	         	</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+    </div>
+
+<script>
+/*
+$('#myModal').draggable({
+	handle: '.modal-header'
+});
+*/
+/*
+	$(function () { 
+		$('#myModal').on('show.bs.modal', function () {
+			$(this).draggable({
+				handle: '.modal-header'
+			});
+			$(this).css('overflow', 'hidden');
+		})
+	});
+	*/
+</script>
 
 <script src="${rc.contextPath}/app/proj/js/xmjbxx.js?_${date.systemTime}"></script>
 </body>
